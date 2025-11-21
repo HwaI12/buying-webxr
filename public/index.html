@@ -2,119 +2,29 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>購買行動実験 - ショーケース</title>
 
+    <!-- A-Frame ライブラリ -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
 
-    <style>
-      #info-panel {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 10px;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        border-radius: 5px;
-        z-index: 1000;
-      }
-    </style>
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="./css/styles.css" />
+
+    <!-- アプリケーションメインスクリプト（ES6モジュール） -->
+    <script type="module" src="./js/main.js"></script>
   </head>
   <body>
+    <!-- 情報パネル -->
     <div id="info-panel">
       <strong>購買行動実験</strong><br />
       操作: WASD移動 / マウス視点変更<br />
     </div>
 
+    <!-- A-Frameシーン（JavaScriptで動的に生成） -->
     <a-scene>
-      <!-- 街並み環境（人通りのある都市風） -->
-      <a-entity
-        environment="
-          preset: japan;
-          ground: flat;
-          groundColor: #888;
-          groundColor2: #666;
-          skyType: gradient;
-          skyColor: #87ceeb;
-          horizonColor: #e6e9f0;
-          dressing: none;
-          fog: 0.3;
-          lighting: distant;
-          shadow: true;
-        "
-      ></a-entity>
-
-      <a-assets>
-        <!-- ケーキショーケースを二つ配置 -->
-        <a-asset-item
-          id="cake-showcase-gltf"
-          src="./models/Showcase 3D Model by LitoStudio/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
-          id="cake-showcase-gltf-2"
-          src="./models/Showcase 3D Model by LitoStudio/scene.gltf"
-        ></a-asset-item>
-      </a-assets>
-
-      <!-- ショーケース本体 -->
-      <a-entity
-        gltf-model="#cake-showcase-gltf"
-        position="-2.4 0 -7"
-        rotation="0 270 0"
-        scale="1.4 1.4 1.4"
-      ></a-entity>
-      <a-entity
-        gltf-model="#cake-showcase-gltf-2"
-        position="1 0 -7"
-        rotation="0 270 0"
-        scale="1.4 1.4 1.4"
-      ></a-entity>
-
-      <!-- 街の装飾: 建物など -->
-      <a-box
-        position="-10 2 -15"
-        width="4"
-        height="8"
-        depth="3"
-        color="#cccccc"
-      ></a-box>
-      <a-box
-        position="10 2 -15"
-        width="4"
-        height="8"
-        depth="3"
-        color="#bbbbbb"
-      ></a-box>
-      <a-box
-        position="-15 3 -5"
-        width="3"
-        height="12"
-        depth="3"
-        color="#aaaaaa"
-      ></a-box>
-      <a-box
-        position="15 3 -5"
-        width="3"
-        height="12"
-        depth="3"
-        color="#999999"
-      ></a-box>
-
-      <!-- カメラ（カーソル付き） -->
-      <a-entity position="0 1.6 0">
-        <a-camera
-          wasd-controls-enabled="true"
-          look-controls="pointerLockEnabled: true"
-        >
-          <a-cursor
-            color="#ffffff"
-            opacity="0.8"
-            raycaster="objects: .clickable"
-          ></a-cursor>
-        </a-camera>
-      </a-entity>
+      <!-- アセットとエンティティはJavaScriptで動的に追加されます -->
     </a-scene>
   </body>
 </html>
