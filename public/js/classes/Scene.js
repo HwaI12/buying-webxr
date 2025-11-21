@@ -4,6 +4,9 @@
  */
 import { Environment } from "./Environment.js";
 import { Showcase } from "./Showcase.js";
+import { Floor } from "./Floor.js";
+import { FlatWall } from "./FlatWall.js";
+import { Light } from "./Light.js";
 import { Camera } from "./Camera.js";
 
 export class Scene {
@@ -16,6 +19,9 @@ export class Scene {
     this.assetsElement = null;
     this.environment = null;
     this.showcases = [];
+    this.floor = null;
+    this.walls = [];
+    this.lights = [];
     this.camera = null;
   }
 
@@ -40,6 +46,9 @@ export class Scene {
 
     // 各要素を作成
     this.createEnvironment();
+    this.createFloor();
+    this.createWalls();
+    this.createLights();
     this.createShowcases();
     this.createCamera();
   }
@@ -65,6 +74,42 @@ export class Scene {
   }
 
   /**
+   * 床を作成
+   */
+  createFloor() {
+    if (this.config.floor) {
+      this.floor = new Floor(this.config.floor);
+      this.floor.create(this.sceneElement);
+    }
+  }
+
+  /**
+   * 壁を作成
+   */
+  createWalls() {
+    if (this.config.walls) {
+      this.config.walls.forEach((wallConfig) => {
+        const wall = new FlatWall(wallConfig);
+        wall.create(this.sceneElement);
+        this.walls.push(wall);
+      });
+    }
+  }
+
+  /**
+   * 照明を作成
+   */
+  createLights() {
+    if (this.config.lights) {
+      this.config.lights.forEach((lightConfig) => {
+        const light = new Light(lightConfig);
+        light.create(this.sceneElement);
+        this.lights.push(light);
+      });
+    }
+  }
+
+  /**
    * カメラを作成
    */
   createCamera() {
@@ -79,6 +124,14 @@ export class Scene {
    */
   getShowcase(id) {
     return this.showcases.find((showcase) => showcase.id === id);
+  }
+
+  /**
+   * 床を取得
+   * @returns {Floor|null}
+   */
+  getFloor() {
+    return this.floor;
   }
 
   /**
@@ -110,6 +163,20 @@ export class Scene {
     // ショーケースを削除
     this.showcases.forEach((showcase) => showcase.remove());
     this.showcases = [];
+
+    // 床を削除
+    if (this.floor) {
+      this.floor.remove();
+      this.floor = null;
+    }
+
+    // 壁を削除
+    this.walls.forEach((wall) => wall.remove());
+    this.walls = [];
+
+    // 照明を削除
+    this.lights.forEach((light) => light.remove());
+    this.lights = [];
 
     // カメラを削除
     if (this.camera) {

@@ -1,4 +1,5 @@
 package-lock.json
 node_modules/
 package.json
-public/models/
+models/
+textures/
