@@ -2,10 +2,9 @@
  * Sceneクラス
  * A-Frameシーン全体を管理するメインクラス
  */
-import { Environment } from './Environment.js';
-import { Showcase } from './Showcase.js';
-import { Building } from './Building.js';
-import { Camera } from './Camera.js';
+import { Environment } from "./Environment.js";
+import { Showcase } from "./Showcase.js";
+import { Camera } from "./Camera.js";
 
 export class Scene {
   /**
@@ -17,7 +16,6 @@ export class Scene {
     this.assetsElement = null;
     this.environment = null;
     this.showcases = [];
-    this.buildings = [];
     this.camera = null;
   }
 
@@ -26,24 +24,23 @@ export class Scene {
    */
   init() {
     // A-Frameシーン要素を取得
-    this.sceneElement = document.querySelector('a-scene');
+    this.sceneElement = document.querySelector("a-scene");
 
     if (!this.sceneElement) {
-      console.error('A-Frameシーンが見つかりません');
+      console.error("A-Frameシーンが見つかりません");
       return;
     }
 
     // アセット要素を取得または作成
-    this.assetsElement = this.sceneElement.querySelector('a-assets');
+    this.assetsElement = this.sceneElement.querySelector("a-assets");
     if (!this.assetsElement) {
-      this.assetsElement = document.createElement('a-assets');
+      this.assetsElement = document.createElement("a-assets");
       this.sceneElement.appendChild(this.assetsElement);
     }
 
     // 各要素を作成
     this.createEnvironment();
     this.createShowcases();
-    this.createBuildings();
     this.createCamera();
   }
 
@@ -59,22 +56,11 @@ export class Scene {
    * ショーケースを作成
    */
   createShowcases() {
-    this.config.showcases.forEach(showcaseConfig => {
+    this.config.showcases.forEach((showcaseConfig) => {
       const showcase = new Showcase(showcaseConfig);
       showcase.createAsset(this.assetsElement);
       showcase.create(this.sceneElement);
       this.showcases.push(showcase);
-    });
-  }
-
-  /**
-   * 建物を作成
-   */
-  createBuildings() {
-    this.config.buildings.forEach(buildingConfig => {
-      const building = new Building(buildingConfig);
-      building.create(this.sceneElement);
-      this.buildings.push(building);
     });
   }
 
@@ -92,16 +78,7 @@ export class Scene {
    * @returns {Showcase|undefined}
    */
   getShowcase(id) {
-    return this.showcases.find(showcase => showcase.id === id);
-  }
-
-  /**
-   * 建物を取得
-   * @param {string} id - 建物ID
-   * @returns {Building|undefined}
-   */
-  getBuilding(id) {
-    return this.buildings.find(building => building.id === id);
+    return this.showcases.find((showcase) => showcase.id === id);
   }
 
   /**
@@ -131,12 +108,8 @@ export class Scene {
     }
 
     // ショーケースを削除
-    this.showcases.forEach(showcase => showcase.remove());
+    this.showcases.forEach((showcase) => showcase.remove());
     this.showcases = [];
-
-    // 建物を削除
-    this.buildings.forEach(building => building.remove());
-    this.buildings = [];
 
     // カメラを削除
     if (this.camera) {
