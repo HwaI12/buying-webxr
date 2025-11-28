@@ -6,6 +6,7 @@ import { Environment } from "./Environment.js";
 import { Showcase } from "./Showcase.js";
 import { Floor } from "./Floor.js";
 import { FlatWall } from "./FlatWall.js";
+import { ThickWall } from "./ThickWall.js";
 import { DisplayPlatform } from "./DisplayPlatform.js";
 import { Light } from "./Light.js";
 import { Camera } from "./Camera.js";
@@ -23,6 +24,7 @@ export class Scene {
     this.objects = [];
     this.floor = null;
     this.walls = [];
+    this.thickWalls = [];
     this.platforms = [];
     this.lights = [];
     this.camera = null;
@@ -51,6 +53,7 @@ export class Scene {
     this.createEnvironment();
     this.createFloor();
     this.createWalls();
+    this.createThickWalls();
     this.createPlatforms();
     this.createLights();
     this.createShowcases();
@@ -111,6 +114,19 @@ export class Scene {
         const wall = new FlatWall(wallConfig);
         wall.create(this.sceneElement);
         this.walls.push(wall);
+      });
+    }
+  }
+
+  /**
+   * 厚みのある壁を作成
+   */
+  createThickWalls() {
+    if (this.config.thickWalls) {
+      this.config.thickWalls.forEach((wallConfig) => {
+        const wall = new ThickWall(wallConfig);
+        wall.create(this.sceneElement);
+        this.thickWalls.push(wall);
       });
     }
   }
@@ -209,6 +225,10 @@ export class Scene {
     // 壁を削除
     this.walls.forEach((wall) => wall.remove());
     this.walls = [];
+
+    // 厚みのある壁を削除
+    this.thickWalls.forEach((wall) => wall.remove());
+    this.thickWalls = [];
 
     // 四角柱を削除
     this.platforms.forEach((platform) => platform.remove());

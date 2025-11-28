@@ -108,6 +108,42 @@ export const CONFIG = {
     },
   ],
 
+  // 厚みのある壁設定
+  thickWalls: [
+    {
+      id: "back-shopping-wall",
+      position: { x: 0, y: 2.5, z: -13 },
+      dimensions: { width: 18, height: 10, depth: 0.3 },
+      rotation: { x: 0, y: 0, z: 0 },
+      texture: "./textures/plaster.jpg",
+      repeat: { x: 3, y: 1 },
+    },
+    {
+      id: "back-shopping-wall-2",
+      position: { x: 0, y: 2.5, z: -20 },
+      dimensions: { width: 18, height: 10, depth: 0.3 },
+      rotation: { x: 0, y: 0, z: 0 },
+      texture: "./textures/plaster.jpg",
+      repeat: { x: 3, y: 1 },
+    },
+    {
+      id: "left-shopping-wall",
+      position: { x: -9, y: 2.5, z: -13 },
+      dimensions: { width: 14, height: 10, depth: 0.3 },
+      rotation: { x: 0, y: 90, z: 0 },
+      texture: "./textures/plaster.jpg",
+      repeat: { x: 3, y: 1 },
+    },
+    {
+      id: "right-shopping-wall",
+      position: { x: 9, y: 2.5, z: -13 },
+      dimensions: { width: 14, height: 10, depth: 0.3 },
+      rotation: { x: 0, y: -90, z: 0 },
+      texture: "./textures/plaster.jpg",
+      repeat: { x: 3, y: 1 },
+    },
+  ],
+
   // 展示台設定
   platforms: [
     {
