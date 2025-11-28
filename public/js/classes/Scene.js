@@ -22,18 +22,22 @@ export class Scene {
     this.environment = null;
     this.showcases = [];
     this.objects = [];
+    this.showcaseItems = []; // ショーケース内の物体
     this.floor = null;
     this.walls = [];
     this.thickWalls = [];
     this.platforms = [];
     this.lights = [];
     this.camera = null;
+    this.layoutPatterns = null; // 読み込んだレイアウトパターン
+    this.selectedPattern = null; // 選択されたパターン
+    this.currentPatternIndex = 0; // 現在のパターンインデックス
   }
 
   /**
    * シーンを初期化
    */
-  init() {
+  async init() {
     // A-Frameシーン要素を取得
     this.sceneElement = document.querySelector("a-scene");
 
@@ -49,6 +53,9 @@ export class Scene {
       this.sceneElement.appendChild(this.assetsElement);
     }
 
+    // レイアウトパターンを読み込み
+    await this.loadLayoutPatterns();
+
     // 各要素を作成
     this.createEnvironment();
     this.createFloor();
@@ -58,6 +65,7 @@ export class Scene {
     this.createLights();
     this.createShowcases();
     this.createObjects();
+    this.createShowcaseItems(); // ショーケース内の物体を配置
     this.createCamera();
   }
 
@@ -161,8 +169,118 @@ export class Scene {
    * カメラを作成
    */
   createCamera() {
-    this.camera = new Camera(this.config.camera);
+    // カメラ位置をランダムに選択
+    const cameraConfig = this.getRandomCameraConfig();
+    this.camera = new Camera(cameraConfig);
     this.camera.create(this.sceneElement);
+
+    // 選択されたカメラ位置をログ出力
+    console.log(`カメラ位置: ${cameraConfig.selectedPosition.description} (${cameraConfig.selectedPosition.id})`);
+  }
+
+  /**
+   * ランダムにカメラ設定を取得
+   * @returns {Object} カメラ設定オブジェクト
+   */
+  getRandomCameraConfig() {
+    const positions = this.config.cameraPositions;
+    const randomIndex = Math.floor(Math.random() * positions.length);
+    const selectedPosition = positions[randomIndex];
+
+    return {
+      ...this.config.camera,
+      position: selectedPosition.position,
+      rotation: selectedPosition.rotation || { x: 0, y: 0, z: 0 },
+      selectedPosition: selectedPosition
+    };
+  }
+
+  /**
+   * レイアウトパターンを読み込み
+   */
+  async loadLayoutPatterns() {
+    try {
+      const response = await fetch('./data/showcase-layouts.json');
+      if (!response.ok) {
+        throw new Error(`JSONファイルの読み込みに失敗: ${response.status}`);
+      }
+      this.layoutPatterns = await response.json();
+
+      // ランダムにパターンを選択
+      const patterns = this.layoutPatterns.patterns;
+      this.currentPatternIndex = Math.floor(Math.random() * patterns.length);
+      this.selectedPattern = patterns[this.currentPatternIndex];
+
+      console.log(`選択されたレイアウトパターン: ${this.selectedPattern.name} (${this.selectedPattern.id})`);
+      console.log(`説明: ${this.selectedPattern.description}`);
+    } catch (error) {
+      console.error('レイアウトパターンの読み込みエラー:', error);
+      this.selectedPattern = null;
+    }
+  }
+
+  /**
+   * 次のパターンに切り替え
+   */
+  switchToNextPattern() {
+    if (!this.layoutPatterns || !this.layoutPatterns.patterns) {
+      console.error('レイアウトパターンが読み込まれていません');
+      return false;
+    }
+
+    // 現在のショーケースアイテムを削除
+    this.showcaseItems.forEach((item) => item.remove());
+    this.showcaseItems = [];
+
+    // 次のパターンに進む（最後に達したら最初に戻る）
+    this.currentPatternIndex = (this.currentPatternIndex + 1) % this.layoutPatterns.patterns.length;
+    this.selectedPattern = this.layoutPatterns.patterns[this.currentPatternIndex];
+
+    console.log(`パターン切り替え: ${this.selectedPattern.name} (${this.selectedPattern.id})`);
+    console.log(`説明: ${this.selectedPattern.description}`);
+
+    // 新しいパターンでアイテムを作成
+    this.createShowcaseItems();
+
+    return true;
+  }
+
+  /**
+   * 現在のパターン情報を取得
+   * @returns {Object|null}
+   */
+  getCurrentPatternInfo() {
+    if (!this.selectedPattern) {
+      return null;
+    }
+    return {
+      id: this.selectedPattern.id,
+      name: this.selectedPattern.name,
+      description: this.selectedPattern.description,
+      index: this.currentPatternIndex,
+      total: this.layoutPatterns ? this.layoutPatterns.patterns.length : 0
+    };
+  }
+
+  /**
+   * ショーケース内の物体を配置
+   */
+  createShowcaseItems() {
+    if (!this.selectedPattern) {
+      console.warn('レイアウトパターンが選択されていません');
+      return;
+    }
+
+    this.selectedPattern.showcases.forEach((showcaseData) => {
+      showcaseData.objects.forEach((objectConfig) => {
+        const item = new Showcase(objectConfig);
+        item.createAsset(this.assetsElement);
+        item.create(this.sceneElement);
+        this.showcaseItems.push(item);
+      });
+    });
+
+    console.log(`${this.showcaseItems.length}個のアイテムをショーケースに配置しました`);
   }
 
   /**
@@ -216,6 +334,10 @@ export class Scene {
     this.objects.forEach((object) => object.remove());
     this.objects = [];
 
+    // ショーケース内の物体を削除
+    this.showcaseItems.forEach((item) => item.remove());
+    this.showcaseItems = [];
+
     // 床を削除
     if (this.floor) {
       this.floor.remove();
@@ -243,13 +365,16 @@ export class Scene {
       this.camera.remove();
       this.camera = null;
     }
+
+    // レイアウトパターンをリセット
+    this.selectedPattern = null;
   }
 
   /**
    * シーンをリセットして再初期化
    */
-  reset() {
+  async reset() {
     this.clear();
-    this.init();
+    await this.init();
   }
 }

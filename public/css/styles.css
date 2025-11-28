@@ -16,10 +16,72 @@
   z-index: 1000;
 }
 
+/* パターン切り替えパネル */
+#pattern-control-panel {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  border-radius: 5px;
+  z-index: 1000;
+  min-width: 200px;
+}
+
+#pattern-info {
+  margin-bottom: 10px;
+}
+
+#current-pattern-name {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+#next-pattern-btn {
+  width: 100%;
+  padding: 8px 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+#next-pattern-btn:hover {
+  background: #45a049;
+}
+
+#next-pattern-btn:active {
+  background: #3d8b40;
+  transform: scale(0.98);
+}
+
+#next-pattern-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
 /* レスポンシブデザイン: 小さい画面用 */
 @media (max-width: 768px) {
   #info-panel {
     font-size: 12px;
     padding: 8px;
+  }
+
+  #pattern-control-panel {
+    font-size: 12px;
+    padding: 8px;
+    min-width: 150px;
+  }
+
+  #next-pattern-btn {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }

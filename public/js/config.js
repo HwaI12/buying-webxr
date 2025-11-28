@@ -165,9 +165,29 @@ export const CONFIG = {
     repeat: 10, // テクスチャの繰り返し回数（タイルの数）
   },
 
-  // カメラ設定
+  // カメラ設定（複数のカメラ位置からランダムに選択）
+  cameraPositions: [
+    {
+      id: "position-1",
+      description: "正面中央",
+      position: { x: 0, y: 1.6, z: 30 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: "position-2",
+      description: "右側",
+      position: { x: 25, y: 1.6, z: -2 },
+      rotation: { x: 0, y: 90, z: 0 },
+    },
+    {
+      id: "position-3",
+      description: "左側",
+      position: { x: -30, y: 1.6, z: -2 },
+      rotation: { x: 0, y: -90, z: 0 },
+    },
+  ],
+  // カメラ共通設定
   camera: {
-    position: { x: 0, y: 1.6, z: 30 },
     wasdControlsEnabled: true,
     lookControls: {
       pointerLockEnabled: true,

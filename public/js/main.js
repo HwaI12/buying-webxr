@@ -24,18 +24,64 @@ function initApp() {
 /**
  * シーン読み込み完了時の処理
  */
-function onSceneLoaded() {
+async function onSceneLoaded() {
   console.log('A-Frameシーンが読み込まれました');
 
   // シーンを初期化
   const scene = new Scene(CONFIG);
-  scene.init();
+  await scene.init();
 
   // グローバルスコープに公開（デバッグ用）
   window.appScene = scene;
 
+  // パターン切り替えボタンの設定
+  setupPatternControls(scene);
+
   console.log('アプリケーションの初期化が完了しました');
   console.log('デバッグ: window.appScene でシーンにアクセスできます');
+}
+
+/**
+ * パターン切り替えコントロールを設定
+ * @param {Scene} scene - シーンインスタンス
+ */
+function setupPatternControls(scene) {
+  const patternNameElement = document.getElementById('current-pattern-name');
+  const nextPatternBtn = document.getElementById('next-pattern-btn');
+
+  // 現在のパターン名を表示
+  function updatePatternDisplay() {
+    const patternInfo = scene.getCurrentPatternInfo();
+    if (patternInfo) {
+      patternNameElement.textContent = `${patternInfo.name} (${patternInfo.index + 1}/${patternInfo.total})`;
+    } else {
+      patternNameElement.textContent = '読み込みエラー';
+    }
+  }
+
+  // 初期表示
+  updatePatternDisplay();
+
+  // ボタンクリックイベント
+  nextPatternBtn.addEventListener('click', () => {
+    // ボタンを一時的に無効化
+    nextPatternBtn.disabled = true;
+
+    // パターン切り替え
+    const success = scene.switchToNextPattern();
+
+    if (success) {
+      // 表示を更新
+      updatePatternDisplay();
+    }
+
+    // ボタンを再度有効化（少し遅延を入れて連続クリックを防ぐ）
+    setTimeout(() => {
+      nextPatternBtn.disabled = false;
+    }, 500);
+  });
+
+  console.log('パターン切り替えコントロールを設定しました');
 }
 
 /**
