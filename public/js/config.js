@@ -22,16 +22,34 @@ export const CONFIG = {
     {
       id: "showcase-1",
       modelSrc: "./models/Showcase 3D Model by LitoStudio/scene.gltf",
-      position: { x: -2.4, y: 0, z: -10 },
+      position: { x: -4.9, y: 0, z: -10 },
       rotation: { x: 0, y: 270, z: 0 },
-      scale: { x: 1.4, y: 1.4, z: 1.4 },
+      scale: { x: 1.8, y: 1.4, z: 2 },
     },
     {
       id: "showcase-2",
       modelSrc: "./models/Showcase 3D Model by LitoStudio/scene.gltf",
-      position: { x: 1, y: 0, z: -10 },
+      position: { x: 0, y: 0, z: -10 },
       rotation: { x: 0, y: 270, z: 0 },
-      scale: { x: 1.4, y: 1.4, z: 1.4 },
+      scale: { x: 1.8, y: 1.4, z: 2 },
+    },
+  ],
+
+  // 3Dオブジェクト設定
+  objects: [
+    {
+      id: "register-1",
+      modelSrc: "./models/Canarian Cafe Cash Register/scene.gltf",
+      position: { x: 7, y: 2.3, z: -8 },
+      rotation: { x: 0, y: 180, z: 0 },
+      scale: { x: 0.4, y: 0.4, z: 0.4 },
+    },
+    {
+      id: "money-1",
+      modelSrc: "./models/russians_money/scene.gltf",
+      position: { x: 5, y: 2.3, z: -8 },
+      rotation: { x: 0, y: 0, z: 0 },
+      scale: { x: 0.0015, y: 0.0015, z: 0.0015 },
     },
   ],
 
@@ -54,8 +72,8 @@ export const CONFIG = {
   walls: [
     {
       id: "back-wall",
-      position: { x: 0, y: 2.5, z: -25 }, // 奥の壁
-      width: 50,
+      position: { x: 0, y: 2.5, z: -50 }, // 奥の壁
+      width: 100,
       height: 15,
       rotation: { x: 0, y: 0, z: 0 },
       texture: "./textures/wall.jpg",
@@ -63,8 +81,8 @@ export const CONFIG = {
     },
     {
       id: "front-wall",
-      position: { x: 0, y: 2.5, z: 25 }, // 手前の壁
-      width: 50,
+      position: { x: 0, y: 2.5, z: 50 }, // 手前の壁
+      width: 100,
       height: 15,
       rotation: { x: 0, y: 180, z: 0 },
       texture: "./textures/wall.jpg",
@@ -72,8 +90,8 @@ export const CONFIG = {
     },
     {
       id: "left-wall",
-      position: { x: -25, y: 2.5, z: 0 }, // 左の壁
-      width: 50,
+      position: { x: -50, y: 2.5, z: 0 }, // 左の壁
+      width: 100,
       height: 15,
       rotation: { x: 0, y: 90, z: 0 },
       texture: "./textures/wall.jpg",
@@ -81,12 +99,22 @@ export const CONFIG = {
     },
     {
       id: "right-wall",
-      position: { x: 25, y: 2.5, z: 0 }, // 右の壁
-      width: 50,
+      position: { x: 50, y: 2.5, z: 0 }, // 右の壁
+      width: 100,
       height: 15,
       rotation: { x: 0, y: -90, z: 0 },
       texture: "./textures/wall.jpg",
       repeat: { x: 5, y: 1 },
+    },
+  ],
+
+  // 展示台設定
+  platforms: [
+    {
+      id: "platform-1",
+      position: { x: 6, y: 0.3, z: -8.7 }, // ショーケース1の左
+      dimensions: { width: 5, height: 3.8, depth: 3 },
+      color: "#ffffff",
     },
   ],
 
@@ -103,7 +131,7 @@ export const CONFIG = {
 
   // カメラ設定
   camera: {
-    position: { x: 0, y: 1.6, z: 5 },
+    position: { x: 0, y: 1.6, z: 30 },
     wasdControlsEnabled: true,
     lookControls: {
       pointerLockEnabled: true,

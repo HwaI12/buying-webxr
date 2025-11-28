@@ -6,6 +6,7 @@ import { Environment } from "./Environment.js";
 import { Showcase } from "./Showcase.js";
 import { Floor } from "./Floor.js";
 import { FlatWall } from "./FlatWall.js";
+import { DisplayPlatform } from "./DisplayPlatform.js";
 import { Light } from "./Light.js";
 import { Camera } from "./Camera.js";
 
@@ -19,8 +20,10 @@ export class Scene {
     this.assetsElement = null;
     this.environment = null;
     this.showcases = [];
+    this.objects = [];
     this.floor = null;
     this.walls = [];
+    this.platforms = [];
     this.lights = [];
     this.camera = null;
   }
@@ -48,8 +51,10 @@ export class Scene {
     this.createEnvironment();
     this.createFloor();
     this.createWalls();
+    this.createPlatforms();
     this.createLights();
     this.createShowcases();
+    this.createObjects();
     this.createCamera();
   }
 
@@ -74,6 +79,20 @@ export class Scene {
   }
 
   /**
+   * 3Dオブジェクトを作成
+   */
+  createObjects() {
+    if (this.config.objects) {
+      this.config.objects.forEach((objectConfig) => {
+        const object = new Showcase(objectConfig);
+        object.createAsset(this.assetsElement);
+        object.create(this.sceneElement);
+        this.objects.push(object);
+      });
+    }
+  }
+
+  /**
    * 床を作成
    */
   createFloor() {
@@ -92,6 +111,19 @@ export class Scene {
         const wall = new FlatWall(wallConfig);
         wall.create(this.sceneElement);
         this.walls.push(wall);
+      });
+    }
+  }
+
+  /**
+   * 四角柱を作成
+   */
+  createPlatforms() {
+    if (this.config.platforms) {
+      this.config.platforms.forEach((platformConfig) => {
+        const platform = new DisplayPlatform(platformConfig);
+        platform.create(this.sceneElement);
+        this.platforms.push(platform);
       });
     }
   }
@@ -164,6 +196,10 @@ export class Scene {
     this.showcases.forEach((showcase) => showcase.remove());
     this.showcases = [];
 
+    // 3Dオブジェクトを削除
+    this.objects.forEach((object) => object.remove());
+    this.objects = [];
+
     // 床を削除
     if (this.floor) {
       this.floor.remove();
@@ -173,6 +209,10 @@ export class Scene {
     // 壁を削除
     this.walls.forEach((wall) => wall.remove());
     this.walls = [];
+
+    // 四角柱を削除
+    this.platforms.forEach((platform) => platform.remove());
+    this.platforms = [];
 
     // 照明を削除
     this.lights.forEach((light) => light.remove());
