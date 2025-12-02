@@ -1,0 +1,11 @@
+Model Information:
+* title:	Canarian Cafe -cash register
+* source:	https://sketchfab.com/3d-models/canarian-cafe-cash-register-a785cf24aa624c30a69b59c60c473d8d
+* author:	Lanzaman (https://sketchfab.com/lanzaboy)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Canarian Cafe -cash register" (https://sketchfab.com/3d-models/canarian-cafe-cash-register-a785cf24aa624c30a69b59c60c473d8d) by Lanzaman (https://sketchfab.com/lanzaboy) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
