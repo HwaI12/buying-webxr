@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>購買行動実験 - ショーケース</title>
+
+    <!-- A-Frame ライブラリ -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+
+    <!-- スタイルシート -->
+
+    <!-- アプリケーションメインスクリプト（ES6モジュール） -->
+    <script type="module" crossorigin src="/buying-webxr/assets/index-D473Nl08.js"></script>
+    <link rel="stylesheet" crossorigin href="/buying-webxr/assets/index-D1zlkkgb.css">
+  </head>
+  <body>
+    <!-- 情報パネル -->
+    <div id="info-panel">
+      <strong>購買行動実験</strong><br />
+      操作: WASD移動 / マウス視点変更<br />
+    </div>
+
+    <!-- パターン切り替えパネル -->
+    <div id="pattern-control-panel">
+      <div id="pattern-info">
+        <strong>配置パターン</strong><br />
+        <span id="current-pattern-name">読み込み中...</span>
+      </div>
+      <button id="next-pattern-btn">次のパターン →</button>
+    </div>
+
+    <!-- A-Frameシーン（JavaScriptで動的に生成） -->
+    <a-scene>
+      <!-- アセットとエンティティはJavaScriptで動的に追加されます -->
+    </a-scene>
+  </body>
+</html>
