@@ -124,4 +124,76 @@ export class Camera {
   getCameraElement() {
     return this.cameraElement;
   }
+
+  /**
+   * 現在のカメラ位置を取得
+   * @returns {Object} 位置 {x, y, z}
+   */
+  getCurrentPosition() {
+    if (!this.entity) {
+      return { x: 0, y: 0, z: 0 };
+    }
+
+    const position = this.entity.object3D.position;
+    return {
+      x: position.x,
+      y: position.y,
+      z: position.z
+    };
+  }
+
+  /**
+   * 現在のカメラ回転を取得
+   * @returns {Object} 回転 {x, y, z}（度数法）
+   */
+  getCurrentRotation() {
+    if (!this.cameraElement) {
+      return { x: 0, y: 0, z: 0 };
+    }
+
+    const rotation = this.cameraElement.object3D.rotation;
+    return {
+      x: THREE.MathUtils.radToDeg(rotation.x),
+      y: THREE.MathUtils.radToDeg(rotation.y),
+      z: THREE.MathUtils.radToDeg(rotation.z)
+    };
+  }
+
+  /**
+   * 現在の視線方向ベクトルを取得
+   * @returns {Object} 視線方向 {x, y, z}
+   */
+  getGazeDirection() {
+    if (!this.cameraElement) {
+      return { x: 0, y: 0, z: -1 };
+    }
+
+    const direction = new THREE.Vector3(0, 0, -1);
+    direction.applyQuaternion(this.cameraElement.object3D.quaternion);
+
+    return {
+      x: direction.x,
+      y: direction.y,
+      z: direction.z
+    };
+  }
+
+  /**
+   * カメラのワールド座標を取得
+   * @returns {Object} ワールド座標 {x, y, z}
+   */
+  getWorldPosition() {
+    if (!this.cameraElement) {
+      return { x: 0, y: 0, z: 0 };
+    }
+
+    const worldPos = new THREE.Vector3();
+    this.cameraElement.object3D.getWorldPosition(worldPos);
+
+    return {
+      x: worldPos.x,
+      y: worldPos.y,
+      z: worldPos.z
+    };
+  }
 }

@@ -11,6 +11,7 @@ import { DisplayPlatform } from "./DisplayPlatform.js";
 import { Light } from "./Light.js";
 import { FluorescentLight } from "./FluorescentLight.js";
 import { Camera } from "./Camera.js";
+import { DataCollector } from "./DataCollector.js";
 
 export class Scene {
   /**
@@ -35,6 +36,11 @@ export class Scene {
     this.layoutPatterns = null; // 読み込んだレイアウトパターン
     this.selectedPattern = null; // 選択されたパターン
     this.currentPatternIndex = 0; // 現在のパターンインデックス
+
+    // データ収集
+    this.dataCollector = null;
+    this.trackingInterval = null; // カメラ位置追跡用のインターバル
+    this.samplingRate = 100; // ms（データサンプリング間隔）
   }
 
   /**
@@ -70,6 +76,215 @@ export class Scene {
     this.createObjects();
     this.createShowcaseItems(); // ショーケース内の物体を配置
     this.createCamera();
+
+    // データ収集を初期化
+    this.initDataCollection();
+  }
+
+  /**
+   * データ収集を初期化
+   */
+  initDataCollection() {
+    // 実験条件を収集
+    const experimentConditions = {
+      layoutPatternId: this.selectedPattern ? this.selectedPattern.id : null,
+      layoutPatternName: this.selectedPattern ? this.selectedPattern.name : null,
+      environmentId: this.config.environments ? this.config.environments[this.currentEnvironmentIndex].id : null,
+      environmentName: this.config.environments ? this.config.environments[this.currentEnvironmentIndex].name : null,
+      cameraPositionId: this.camera && this.camera.entity ? this.camera.entity.getAttribute('data-position-id') : null
+    };
+
+    // DataCollectorインスタンスを作成
+    this.dataCollector = new DataCollector({
+      participantId: this.getParticipantId(),
+      experimentConditions: experimentConditions
+    });
+
+    console.log('データ収集を初期化しました');
+  }
+
+  /**
+   * 参加者IDを取得（URLパラメータまたは生成）
+   * @returns {string}
+   */
+  getParticipantId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('participantId') || `participant-${Date.now()}`;
+  }
+
+  /**
+   * データ収集を開始
+   */
+  startDataCollection() {
+    if (!this.dataCollector) {
+      console.error('DataCollectorが初期化されていません');
+      return;
+    }
+
+    // データ収集開始
+    this.dataCollector.startRecording();
+
+    // カメラ位置の定期的な記録を開始
+    this.startCameraTracking();
+
+    console.log('データ収集を開始しました');
+  }
+
+  /**
+   * データ収集を停止
+   */
+  stopDataCollection() {
+    if (!this.dataCollector) {
+      console.error('DataCollectorが初期化されていません');
+      return;
+    }
+
+    // データ収集停止
+    this.dataCollector.stopRecording();
+
+    // カメラ位置の追跡を停止
+    this.stopCameraTracking();
+
+    // 統計情報をログ出力
+    this.dataCollector.logStatistics();
+
+    console.log('データ収集を停止しました');
+  }
+
+  /**
+   * カメラ位置の追跡を開始
+   */
+  startCameraTracking() {
+    if (this.trackingInterval) {
+      console.warn('カメラ追跡は既に開始されています');
+      return;
+    }
+
+    this.trackingInterval = setInterval(() => {
+      if (this.camera && this.dataCollector) {
+        const position = this.camera.getCurrentPosition();
+        const rotation = this.camera.getCurrentRotation();
+        this.dataCollector.recordCameraPosition(position, rotation);
+
+        // 視線方向と注視商品を記録
+        const gazeDirection = this.camera.getGazeDirection();
+        const gazedProduct = this.detectGazedProduct();
+
+        const targetProductId = gazedProduct ? gazedProduct.productId : null;
+        const targetPosition = gazedProduct ? gazedProduct.position : null;
+
+        this.dataCollector.recordGaze(gazeDirection, targetProductId, targetPosition);
+
+        // 商品との距離を記録
+        this.recordProductDistances();
+      }
+    }, this.samplingRate);
+
+    console.log(`カメラ追跡開始（サンプリングレート: ${this.samplingRate}ms）`);
+  }
+
+  /**
+   * 視線で注視している商品を検出
+   * @returns {Object|null} {productId, position, distance} または null
+   */
+  detectGazedProduct() {
+    if (!this.camera || !this.camera.getCameraElement()) {
+      return null;
+    }
+
+    const cameraEl = this.camera.getCameraElement();
+    const cameraWorldPos = new THREE.Vector3();
+    cameraEl.object3D.getWorldPosition(cameraWorldPos);
+
+    // 視線方向ベクトル
+    const direction = new THREE.Vector3(0, 0, -1);
+    direction.applyQuaternion(cameraEl.object3D.quaternion);
+
+    // Raycasterを作成
+    const raycaster = new THREE.Raycaster(cameraWorldPos, direction);
+    raycaster.far = 50; // 検出距離の最大値（メートル）
+
+    // ショーケース内のアイテムに対してレイキャスト
+    let closestIntersection = null;
+    let closestDistance = Infinity;
+
+    this.showcaseItems.forEach((item) => {
+      if (item.entity && item.entity.object3D) {
+        const intersects = raycaster.intersectObject(item.entity.object3D, true);
+
+        if (intersects.length > 0) {
+          const intersection = intersects[0];
+          if (intersection.distance < closestDistance) {
+            closestDistance = intersection.distance;
+            closestIntersection = {
+              productId: item.id,
+              position: {
+                x: intersection.point.x,
+                y: intersection.point.y,
+                z: intersection.point.z
+              },
+              distance: intersection.distance
+            };
+          }
+        }
+      }
+    });
+
+    return closestIntersection;
+  }
+
+  /**
+   * すべての商品との距離を記録
+   */
+  recordProductDistances() {
+    if (!this.camera || !this.dataCollector) {
+      return;
+    }
+
+    const cameraPos = this.camera.getWorldPosition();
+    const cameraPosVec = new THREE.Vector3(cameraPos.x, cameraPos.y, cameraPos.z);
+
+    this.showcaseItems.forEach((item) => {
+      if (item.entity && item.entity.object3D) {
+        const itemPos = new THREE.Vector3();
+        item.entity.object3D.getWorldPosition(itemPos);
+
+        const distance = cameraPosVec.distanceTo(itemPos);
+
+        // 前回の距離と比較して接近中かどうかを判定
+        const previousRecord = this.dataCollector.productDistances
+          .filter(record => record.productId === item.id)
+          .pop();
+
+        const isApproaching = previousRecord
+          ? distance < previousRecord.distance
+          : false;
+
+        // 距離が一定範囲内の場合のみ記録（パフォーマンス最適化）
+        if (distance < 10) {
+          this.dataCollector.recordProductDistance(item.id, distance, isApproaching);
+        }
+      }
+    });
+  }
+
+  /**
+   * カメラ位置の追跡を停止
+   */
+  stopCameraTracking() {
+    if (this.trackingInterval) {
+      clearInterval(this.trackingInterval);
+      this.trackingInterval = null;
+      console.log('カメラ追跡を停止しました');
+    }
+  }
+
+  /**
+   * DataCollectorを取得
+   * @returns {DataCollector|null}
+   */
+  getDataCollector() {
+    return this.dataCollector;
   }
 
   /**
@@ -222,7 +437,9 @@ export class Scene {
     this.camera.create(this.sceneElement);
 
     // 選択されたカメラ位置をログ出力
-    console.log(`カメラ位置: ${cameraConfig.selectedPosition.description} (${cameraConfig.selectedPosition.id})`);
+    console.log(
+      `カメラ位置: ${cameraConfig.selectedPosition.description} (${cameraConfig.selectedPosition.id})`
+    );
   }
 
   /**
@@ -238,7 +455,7 @@ export class Scene {
       ...this.config.camera,
       position: selectedPosition.position,
       rotation: selectedPosition.rotation || { x: 0, y: 0, z: 0 },
-      selectedPosition: selectedPosition
+      selectedPosition: selectedPosition,
     };
   }
 
@@ -247,7 +464,7 @@ export class Scene {
    */
   async loadLayoutPatterns() {
     try {
-      const response = await fetch('./data/showcase-layouts.json');
+      const response = await fetch("./data/showcase-layouts.json");
       if (!response.ok) {
         throw new Error(`JSONファイルの読み込みに失敗: ${response.status}`);
       }
@@ -258,10 +475,12 @@ export class Scene {
       this.currentPatternIndex = Math.floor(Math.random() * patterns.length);
       this.selectedPattern = patterns[this.currentPatternIndex];
 
-      console.log(`選択されたレイアウトパターン: ${this.selectedPattern.name} (${this.selectedPattern.id})`);
+      console.log(
+        `選択されたレイアウトパターン: ${this.selectedPattern.name} (${this.selectedPattern.id})`
+      );
       console.log(`説明: ${this.selectedPattern.description}`);
     } catch (error) {
-      console.error('レイアウトパターンの読み込みエラー:', error);
+      console.error("レイアウトパターンの読み込みエラー:", error);
       this.selectedPattern = null;
     }
   }
@@ -271,7 +490,7 @@ export class Scene {
    */
   switchToNextPattern() {
     if (!this.layoutPatterns || !this.layoutPatterns.patterns) {
-      console.error('レイアウトパターンが読み込まれていません');
+      console.error("レイアウトパターンが読み込まれていません");
       return false;
     }
 
@@ -280,10 +499,14 @@ export class Scene {
     this.showcaseItems = [];
 
     // 次のパターンに進む（最後に達したら最初に戻る）
-    this.currentPatternIndex = (this.currentPatternIndex + 1) % this.layoutPatterns.patterns.length;
-    this.selectedPattern = this.layoutPatterns.patterns[this.currentPatternIndex];
+    this.currentPatternIndex =
+      (this.currentPatternIndex + 1) % this.layoutPatterns.patterns.length;
+    this.selectedPattern =
+      this.layoutPatterns.patterns[this.currentPatternIndex];
 
-    console.log(`パターン切り替え: ${this.selectedPattern.name} (${this.selectedPattern.id})`);
+    console.log(
+      `パターン切り替え: ${this.selectedPattern.name} (${this.selectedPattern.id})`
+    );
     console.log(`説明: ${this.selectedPattern.description}`);
 
     // 新しいパターンでアイテムを作成
@@ -305,7 +528,7 @@ export class Scene {
       name: this.selectedPattern.name,
       description: this.selectedPattern.description,
       index: this.currentPatternIndex,
-      total: this.layoutPatterns ? this.layoutPatterns.patterns.length : 0
+      total: this.layoutPatterns ? this.layoutPatterns.patterns.length : 0,
     };
   }
 
@@ -314,7 +537,7 @@ export class Scene {
    */
   createShowcaseItems() {
     if (!this.selectedPattern) {
-      console.warn('レイアウトパターンが選択されていません');
+      console.warn("レイアウトパターンが選択されていません");
       return;
     }
 
@@ -324,10 +547,47 @@ export class Scene {
         item.createAsset(this.assetsElement);
         item.create(this.sceneElement);
         this.showcaseItems.push(item);
+
+        // 商品選択イベントを設定
+        this.setupProductInteraction(item);
       });
     });
 
-    console.log(`${this.showcaseItems.length}個のアイテムをショーケースに配置しました`);
+    console.log(
+      `${this.showcaseItems.length}個のアイテムをショーケースに配置しました`
+    );
+  }
+
+  /**
+   * 商品のインタラクションイベントを設定
+   * @param {Showcase} item - ショーケースアイテム
+   */
+  setupProductInteraction(item) {
+    // クリックイベント
+    item.onClick((productId, event) => {
+      if (this.dataCollector) {
+        this.dataCollector.recordProductSelection(productId, 'click');
+        console.log(`商品選択: ${productId} (クリック)`);
+      }
+
+      // カスタムイベントを発火（UI更新などに使用）
+      const customEvent = new CustomEvent('product-selected', {
+        detail: { productId: productId, method: 'click' }
+      });
+      document.dispatchEvent(customEvent);
+    });
+
+    // ホバー開始イベント
+    item.onCursorEnter((productId, event) => {
+      // ホバー開始時の処理（必要に応じて）
+      // console.log(`商品にカーソルが乗りました: ${productId}`);
+    });
+
+    // ホバー終了イベント
+    item.onCursorLeave((productId, event) => {
+      // ホバー終了時の処理（必要に応じて）
+      // console.log(`商品からカーソルが離れました: ${productId}`);
+    });
   }
 
   /**
@@ -368,7 +628,7 @@ export class Scene {
    */
   switchEnvironment() {
     if (!this.config.environments || this.config.environments.length === 0) {
-      console.warn('環境設定が見つかりません');
+      console.warn("環境設定が見つかりません");
       return false;
     }
 
@@ -382,7 +642,8 @@ export class Scene {
     this.removeFluorescentLights();
 
     // 次の環境に切り替え
-    this.currentEnvironmentIndex = (this.currentEnvironmentIndex + 1) % this.config.environments.length;
+    this.currentEnvironmentIndex =
+      (this.currentEnvironmentIndex + 1) % this.config.environments.length;
 
     // 新しい環境を作成
     this.createEnvironment();
@@ -406,7 +667,7 @@ export class Scene {
       id: env.id,
       name: env.name,
       index: this.currentEnvironmentIndex,
-      total: this.config.environments.length
+      total: this.config.environments.length,
     };
   }
 
@@ -425,15 +686,23 @@ export class Scene {
     }
 
     // 各照明の強度を更新
-    this.lights.forEach(light => {
+    this.lights.forEach((light) => {
       const lightType = light.type;
 
-      if (lightType === 'ambient' && currentEnv.lightingIntensity.ambient !== undefined) {
+      if (
+        lightType === "ambient" &&
+        currentEnv.lightingIntensity.ambient !== undefined
+      ) {
         light.setIntensity(currentEnv.lightingIntensity.ambient);
         console.log(`環境光の強度: ${currentEnv.lightingIntensity.ambient}`);
-      } else if (lightType === 'directional' && currentEnv.lightingIntensity.directional !== undefined) {
+      } else if (
+        lightType === "directional" &&
+        currentEnv.lightingIntensity.directional !== undefined
+      ) {
         light.setIntensity(currentEnv.lightingIntensity.directional);
-        console.log(`方向光の強度: ${currentEnv.lightingIntensity.directional}`);
+        console.log(
+          `方向光の強度: ${currentEnv.lightingIntensity.directional}`
+        );
       }
     });
   }

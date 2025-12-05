@@ -39,6 +39,18 @@
       <button id="switch-environment-btn">切替</button>
     </div>
 
+    <!-- データ収集コントロールパネル -->
+    <div id="data-collection-panel">
+      <div id="data-collection-info">
+        <strong>データ収集</strong><br />
+        <span id="recording-status">停止中</span>
+      </div>
+      <button id="start-recording-btn">開始</button>
+      <button id="stop-recording-btn" disabled>停止</button>
+      <button id="export-json-btn" disabled>JSON</button>
+      <button id="export-csv-btn" disabled>CSV</button>
+    </div>
+
     <!-- A-Frameシーン（JavaScriptで動的に生成） -->
     <a-scene>
       <!-- アセットとエンティティはJavaScriptで動的に追加されます -->

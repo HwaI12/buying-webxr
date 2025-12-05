@@ -40,6 +40,9 @@ async function onSceneLoaded() {
   // 環境切り替えボタンの設定
   setupEnvironmentControls(scene);
 
+  // データ収集コントロールの設定
+  setupDataCollectionControls(scene);
+
   console.log('アプリケーションの初期化が完了しました');
   console.log('デバッグ: window.appScene でシーンにアクセスできます');
 }
@@ -128,6 +131,78 @@ function setupEnvironmentControls(scene) {
   });
 
   console.log('環境切り替えコントロールを設定しました');
+}
+
+/**
+ * データ収集コントロールを設定
+ * @param {Scene} scene - シーンインスタンス
+ */
+function setupDataCollectionControls(scene) {
+  const recordingStatusElement = document.getElementById('recording-status');
+  const startRecordingBtn = document.getElementById('start-recording-btn');
+  const stopRecordingBtn = document.getElementById('stop-recording-btn');
+  const exportJsonBtn = document.getElementById('export-json-btn');
+  const exportCsvBtn = document.getElementById('export-csv-btn');
+
+  let isRecording = false;
+
+  // 開始ボタンクリックイベント
+  startRecordingBtn.addEventListener('click', () => {
+    if (isRecording) return;
+
+    // データ収集を開始
+    scene.startDataCollection();
+    isRecording = true;
+
+    // UI更新
+    recordingStatusElement.textContent = '記録中...';
+    recordingStatusElement.className = 'recording';
+    startRecordingBtn.disabled = true;
+    stopRecordingBtn.disabled = false;
+    exportJsonBtn.disabled = true;
+    exportCsvBtn.disabled = true;
+
+    console.log('データ収集を開始しました');
+  });
+
+  // 停止ボタンクリックイベント
+  stopRecordingBtn.addEventListener('click', () => {
+    if (!isRecording) return;
+
+    // データ収集を停止
+    scene.stopDataCollection();
+    isRecording = false;
+
+    // UI更新
+    recordingStatusElement.textContent = '停止中（データあり）';
+    recordingStatusElement.className = 'stopped';
+    startRecordingBtn.disabled = false;
+    stopRecordingBtn.disabled = true;
+    exportJsonBtn.disabled = false;
+    exportCsvBtn.disabled = false;
+
+    console.log('データ収集を停止しました');
+  });
+
+  // JSONエクスポートボタン
+  exportJsonBtn.addEventListener('click', () => {
+    const dataCollector = scene.getDataCollector();
+    if (dataCollector) {
+      dataCollector.downloadData('json');
+      console.log('データをJSONでエクスポートしました');
+    }
+  });
+
+  // CSVエクスポートボタン
+  exportCsvBtn.addEventListener('click', () => {
+    const dataCollector = scene.getDataCollector();
+    if (dataCollector) {
+      dataCollector.downloadData('csv');
+      console.log('データをCSVでエクスポートしました');
+    }
+  });
+
+  console.log('データ収集コントロールを設定しました');
 }
 
 /**

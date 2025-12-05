@@ -54,9 +54,49 @@ export class Showcase {
     this.entity.setAttribute('scale',
       `${this.scale.x} ${this.scale.y} ${this.scale.z}`);
 
+    // クリック可能にする（カーソルで選択可能）
+    this.entity.setAttribute('class', 'clickable');
+    this.entity.setAttribute('data-product-id', this.id);
+
     scene.appendChild(this.entity);
 
     return this.entity;
+  }
+
+  /**
+   * クリックイベントリスナーを追加
+   * @param {Function} callback - クリック時のコールバック関数
+   */
+  onClick(callback) {
+    if (this.entity) {
+      this.entity.addEventListener('click', (event) => {
+        callback(this.id, event);
+      });
+    }
+  }
+
+  /**
+   * カーソル進入イベントリスナーを追加（ホバー開始）
+   * @param {Function} callback - コールバック関数
+   */
+  onCursorEnter(callback) {
+    if (this.entity) {
+      this.entity.addEventListener('mouseenter', (event) => {
+        callback(this.id, event);
+      });
+    }
+  }
+
+  /**
+   * カーソル退出イベントリスナーを追加（ホバー終了）
+   * @param {Function} callback - コールバック関数
+   */
+  onCursorLeave(callback) {
+    if (this.entity) {
+      this.entity.addEventListener('mouseleave', (event) => {
+        callback(this.id, event);
+      });
+    }
   }
 
   /**
