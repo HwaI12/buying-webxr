@@ -9,6 +9,7 @@ import { FlatWall } from "./FlatWall.js";
 import { ThickWall } from "./ThickWall.js";
 import { DisplayPlatform } from "./DisplayPlatform.js";
 import { Light } from "./Light.js";
+import { FluorescentLight } from "./FluorescentLight.js";
 import { Camera } from "./Camera.js";
 
 export class Scene {
@@ -20,6 +21,7 @@ export class Scene {
     this.sceneElement = null;
     this.assetsElement = null;
     this.environment = null;
+    this.currentEnvironmentIndex = 0; // 現在の環境インデックス
     this.showcases = [];
     this.objects = [];
     this.showcaseItems = []; // ショーケース内の物体
@@ -28,6 +30,7 @@ export class Scene {
     this.thickWalls = [];
     this.platforms = [];
     this.lights = [];
+    this.fluorescentLights = []; // 環境固有の蛍光灯
     this.camera = null;
     this.layoutPatterns = null; // 読み込んだレイアウトパターン
     this.selectedPattern = null; // 選択されたパターン
@@ -73,8 +76,26 @@ export class Scene {
    * 環境を作成
    */
   createEnvironment() {
-    this.environment = new Environment(this.config.environment);
+    // 環境設定を取得（配列または単一オブジェクト）
+    const envConfig = this.config.environments
+      ? this.config.environments[this.currentEnvironmentIndex]
+      : this.config.environment;
+
+    this.environment = new Environment(envConfig);
     this.environment.create(this.sceneElement);
+
+    if (envConfig && envConfig.name) {
+      console.log(`環境: ${envConfig.name} (${envConfig.id})`);
+    }
+
+    // 初期化時に照明強度を設定
+    if (envConfig && envConfig.lightingIntensity) {
+      // 照明が作成された後に強度を更新
+      setTimeout(() => this.updateLightingIntensity(), 100);
+    }
+
+    // 環境固有の蛍光灯を作成
+    this.createFluorescentLights(envConfig);
   }
 
   /**
@@ -163,6 +184,32 @@ export class Scene {
         this.lights.push(light);
       });
     }
+  }
+
+  /**
+   * 環境固有の蛍光灯を作成
+   * @param {Object} envConfig - 環境設定オブジェクト
+   */
+  createFluorescentLights(envConfig) {
+    if (!envConfig || !envConfig.fluorescentLights) {
+      return;
+    }
+
+    envConfig.fluorescentLights.forEach((lightConfig) => {
+      const fluorescentLight = new FluorescentLight(lightConfig);
+      fluorescentLight.create(this.sceneElement);
+      this.fluorescentLights.push(fluorescentLight);
+    });
+
+    console.log(`${this.fluorescentLights.length}個の蛍光灯を追加しました`);
+  }
+
+  /**
+   * 環境固有の蛍光灯を削除
+   */
+  removeFluorescentLights() {
+    this.fluorescentLights.forEach((light) => light.remove());
+    this.fluorescentLights = [];
   }
 
   /**
@@ -317,6 +364,81 @@ export class Scene {
   }
 
   /**
+   * 環境を切り替え
+   */
+  switchEnvironment() {
+    if (!this.config.environments || this.config.environments.length === 0) {
+      console.warn('環境設定が見つかりません');
+      return false;
+    }
+
+    // 現在の環境を削除
+    if (this.environment) {
+      this.environment.remove();
+      this.environment = null;
+    }
+
+    // 環境固有の蛍光灯を削除
+    this.removeFluorescentLights();
+
+    // 次の環境に切り替え
+    this.currentEnvironmentIndex = (this.currentEnvironmentIndex + 1) % this.config.environments.length;
+
+    // 新しい環境を作成
+    this.createEnvironment();
+
+    // 照明強度を更新
+    this.updateLightingIntensity();
+
+    return true;
+  }
+
+  /**
+   * 現在の環境情報を取得
+   * @returns {Object|null}
+   */
+  getCurrentEnvironmentInfo() {
+    if (!this.config.environments) {
+      return null;
+    }
+    const env = this.config.environments[this.currentEnvironmentIndex];
+    return {
+      id: env.id,
+      name: env.name,
+      index: this.currentEnvironmentIndex,
+      total: this.config.environments.length
+    };
+  }
+
+  /**
+   * 照明強度を現在の環境に合わせて更新
+   */
+  updateLightingIntensity() {
+    if (!this.config.environments) {
+      return;
+    }
+
+    const currentEnv = this.config.environments[this.currentEnvironmentIndex];
+
+    if (!currentEnv.lightingIntensity) {
+      return;
+    }
+
+    // 各照明の強度を更新
+    this.lights.forEach(light => {
+      const lightType = light.type;
+
+      if (lightType === 'ambient' && currentEnv.lightingIntensity.ambient !== undefined) {
+        light.setIntensity(currentEnv.lightingIntensity.ambient);
+        console.log(`環境光の強度: ${currentEnv.lightingIntensity.ambient}`);
+      } else if (lightType === 'directional' && currentEnv.lightingIntensity.directional !== undefined) {
+        light.setIntensity(currentEnv.lightingIntensity.directional);
+        console.log(`方向光の強度: ${currentEnv.lightingIntensity.directional}`);
+      }
+    });
+  }
+
+  /**
    * シーンをクリア
    */
   clear() {
@@ -359,6 +481,9 @@ export class Scene {
     // 照明を削除
     this.lights.forEach((light) => light.remove());
     this.lights = [];
+
+    // 環境固有の蛍光灯を削除
+    this.removeFluorescentLights();
 
     // カメラを削除
     if (this.camera) {

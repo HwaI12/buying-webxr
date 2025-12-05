@@ -37,6 +37,9 @@ async function onSceneLoaded() {
   // パターン切り替えボタンの設定
   setupPatternControls(scene);
 
+  // 環境切り替えボタンの設定
+  setupEnvironmentControls(scene);
+
   console.log('アプリケーションの初期化が完了しました');
   console.log('デバッグ: window.appScene でシーンにアクセスできます');
 }
@@ -82,6 +85,49 @@ function setupPatternControls(scene) {
   });
 
   console.log('パターン切り替えコントロールを設定しました');
+}
+
+/**
+ * 環境切り替えコントロールを設定
+ * @param {Scene} scene - シーンインスタンス
+ */
+function setupEnvironmentControls(scene) {
+  const environmentNameElement = document.getElementById('current-environment-name');
+  const switchEnvironmentBtn = document.getElementById('switch-environment-btn');
+
+  // 現在の環境名を表示
+  function updateEnvironmentDisplay() {
+    const envInfo = scene.getCurrentEnvironmentInfo();
+    if (envInfo) {
+      environmentNameElement.textContent = `${envInfo.name} (${envInfo.index + 1}/${envInfo.total})`;
+    } else {
+      environmentNameElement.textContent = '読み込みエラー';
+    }
+  }
+
+  // 初期表示
+  updateEnvironmentDisplay();
+
+  // ボタンクリックイベント
+  switchEnvironmentBtn.addEventListener('click', () => {
+    // ボタンを一時的に無効化
+    switchEnvironmentBtn.disabled = true;
+
+    // 環境切り替え
+    const success = scene.switchEnvironment();
+
+    if (success) {
+      // 表示を更新
+      updateEnvironmentDisplay();
+    }
+
+    // ボタンを再度有効化（少し遅延を入れて連続クリックを防ぐ）
+    setTimeout(() => {
+      switchEnvironmentBtn.disabled = false;
+    }, 500);
+  });
+
+  console.log('環境切り替えコントロールを設定しました');
 }
 
 /**

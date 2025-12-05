@@ -67,6 +67,57 @@
   cursor: not-allowed;
 }
 
+/* 環境切り替えパネル */
+#environment-control-panel {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  border-radius: 5px;
+  z-index: 1000;
+  min-width: 200px;
+}
+
+#environment-info {
+  margin-bottom: 10px;
+}
+
+#current-environment-name {
+  color: #ffa500;
+  font-weight: bold;
+}
+
+#switch-environment-btn {
+  width: 100%;
+  padding: 8px 12px;
+  background: #ffa500;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+#switch-environment-btn:hover {
+  background: #ff8c00;
+}
+
+#switch-environment-btn:active {
+  background: #e67e00;
+  transform: scale(0.98);
+}
+
+#switch-environment-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
 /* レスポンシブデザイン: 小さい画面用 */
 @media (max-width: 768px) {
   #info-panel {
@@ -81,6 +132,17 @@
   }
 
   #next-pattern-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  #environment-control-panel {
+    font-size: 12px;
+    padding: 8px;
+    min-width: 150px;
+  }
+
+  #switch-environment-btn {
     font-size: 12px;
     padding: 6px 10px;
   }

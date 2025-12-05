@@ -4,18 +4,73 @@
  */
 
 export const CONFIG = {
-  // 環境設定
-  environment: {
-    preset: "japan",
-    ground: "none",
-    skyType: "gradient",
-    skyColor: "#87ceeb",
-    horizonColor: "#e6e9f0",
-    dressing: "none",
-    fog: 0.3,
-    lighting: "none", // カスタム照明を使用するため環境照明をオフ
-    shadow: false,
-  },
+  // 環境設定（複数の時間帯）
+  environments: [
+    {
+      id: "morning",
+      name: "朝",
+      preset: "japan",
+      ground: "none",
+      skyType: "gradient",
+      skyColor: "#87ceeb", // 明るい青空
+      horizonColor: "#e6e9f0", // 明るい地平線
+      dressing: "none",
+      fog: 0.3,
+      lighting: "none",
+      shadow: false,
+      // 照明強度設定
+      lightingIntensity: {
+        ambient: 0.7, // 環境光
+        directional: 0.4, // 方向光
+      },
+      // 朝も蛍光灯を表示
+      fluorescentLights: [
+        {
+          id: "fluorescent-back",
+          position: { x: 0, y: 6.5, z: -12.8 }, // back-shopping-wall上部
+          rotation: { x: 0, y: 0, z: 0 },
+          dimensions: { width: 14, height: 0.1, depth: 0.3 },
+          emissiveColor: "#ffffff",
+          emissiveIntensity: 1.5,
+          lightIntensity: 1.5,
+          lightDistance: 12,
+          numberOfLights: 3, // ポイントライトの数
+        },
+      ],
+    },
+    {
+      id: "night",
+      name: "夜",
+      preset: "starry",
+      ground: "none",
+      skyType: "gradient",
+      skyColor: "#000033", // 深い夜空
+      horizonColor: "#1a1a2e", // 暗い地平線
+      dressing: "none",
+      fog: 0.5,
+      lighting: "none",
+      shadow: false,
+      // 照明強度設定（暗くする）
+      lightingIntensity: {
+        ambient: 0.3, // 環境光: 大幅に減少
+        directional: 0.2, // 方向光: 大幅に減少
+      },
+      // 夜専用の蛍光灯（ショッピングエリアの壁を照らす）
+      fluorescentLights: [
+        {
+          id: "fluorescent-back",
+          position: { x: 0, y: 6.5, z: -12.8 }, // back-shopping-wall上部
+          rotation: { x: 0, y: 0, z: 0 },
+          dimensions: { width: 14, height: 0.1, depth: 0.3 },
+          emissiveColor: "#ffffff",
+          emissiveIntensity: 1.5,
+          lightIntensity: 1.5,
+          lightDistance: 12,
+          numberOfLights: 3, // ポイントライトの数
+        },
+      ],
+    },
+  ],
 
   // ショーケース設定
   showcases: [
@@ -72,36 +127,36 @@ export const CONFIG = {
   walls: [
     {
       id: "back-wall",
-      position: { x: 0, y: 2.5, z: -50 }, // 奥の壁
-      width: 100,
-      height: 15,
+      position: { x: 0, y: 5, z: -40 }, // 奥の壁
+      width: 80,
+      height: 10,
       rotation: { x: 0, y: 0, z: 0 },
       texture: "./textures/wall.jpg",
       repeat: { x: 5, y: 1 },
     },
     {
       id: "front-wall",
-      position: { x: 0, y: 2.5, z: 50 }, // 手前の壁
-      width: 100,
-      height: 15,
+      position: { x: 0, y: 5, z: 40 }, // 手前の壁
+      width: 80,
+      height: 10,
       rotation: { x: 0, y: 180, z: 0 },
       texture: "./textures/wall.jpg",
       repeat: { x: 5, y: 1 },
     },
     {
       id: "left-wall",
-      position: { x: -50, y: 2.5, z: 0 }, // 左の壁
-      width: 100,
-      height: 15,
+      position: { x: -40, y: 5, z: 0 }, // 左の壁
+      width: 80,
+      height: 10,
       rotation: { x: 0, y: 90, z: 0 },
       texture: "./textures/wall.jpg",
       repeat: { x: 5, y: 1 },
     },
     {
       id: "right-wall",
-      position: { x: 50, y: 2.5, z: 0 }, // 右の壁
-      width: 100,
-      height: 15,
+      position: { x: 40, y: 5, z: 0 }, // 右の壁
+      width: 80,
+      height: 10,
       rotation: { x: 0, y: -90, z: 0 },
       texture: "./textures/wall.jpg",
       repeat: { x: 5, y: 1 },
@@ -158,8 +213,8 @@ export const CONFIG = {
   floor: {
     id: "custom-floor",
     position: { x: 0, y: 0, z: 0 }, // ショーケースと同じ高さ
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     rotation: { x: -90, y: 0, z: 0 },
     texture: "./textures/floor.jpg", // テクスチャ画像のパス
     repeat: 10, // テクスチャの繰り返し回数（タイルの数）
