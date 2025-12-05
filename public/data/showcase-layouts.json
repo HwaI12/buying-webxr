@@ -1,0 +1,189 @@
+{
+  "patterns": [
+    {
+      "id": "plates-vertical-row",
+      "name": "お皿縦配置",
+      "description": "ショーケース内にお皿を縦一列に3枚配置",
+      "showcases": [
+        {
+          "showcaseId": "showcase-1",
+          "objects": [
+            {
+              "id": "plate-1-1-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -5.5, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-1-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -5.5, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-1-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -4.5, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-2-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -4.5, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-2-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -4.5, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-2-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -5.5, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-3-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -3.3, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-3-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -3.3, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-3-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -3.3, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-4-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -2.3, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-4-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -2.3, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-1-4-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -2.3, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            }
+          ]
+        },
+        {
+          "showcaseId": "showcase-2",
+          "objects": [
+            {
+              "id": "plate-2-1-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -0.6, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-1-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -0.6, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-1-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 0.4, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-2-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 0.4, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-2-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 0.4, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-2-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": -0.6, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-3-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 1.6, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-3-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 1.6, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-3-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 1.6, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-4-1",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 2.6, "y": 2.7, "z": -8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-4-2",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 2.6, "y": 2.2, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            },
+            {
+              "id": "plate-2-4-3",
+              "modelSrc": "./models/White Ceramic Plate 3D Model/scene.gltf",
+              "position": { "x": 2.6, "y": 1.7, "z": -7.8 },
+              "rotation": { "x": 0, "y": 0, "z": 0 },
+              "scale": { "x": 3, "y": 3, "z": 3 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
