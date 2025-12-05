@@ -78,10 +78,10 @@ function setupPatternControls(scene) {
       updatePatternDisplay();
     }
 
-    // ボタンを再度有効化（少し遅延を入れて連続クリックを防ぐ）
+    // ボタンを再度有効化（短い遅延）
     setTimeout(() => {
       nextPatternBtn.disabled = false;
-    }, 500);
+    }, 100);
   });
 
   console.log('パターン切り替えコントロールを設定しました');
@@ -121,10 +121,10 @@ function setupEnvironmentControls(scene) {
       updateEnvironmentDisplay();
     }
 
-    // ボタンを再度有効化（少し遅延を入れて連続クリックを防ぐ）
+    // ボタンを再度有効化（短い遅延）
     setTimeout(() => {
       switchEnvironmentBtn.disabled = false;
-    }, 500);
+    }, 100);
   });
 
   console.log('環境切り替えコントロールを設定しました');

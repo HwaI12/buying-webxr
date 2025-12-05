@@ -1,0 +1,8 @@
+Model Information:
+* title:	White Ceramic Plate
+* source:	https://sketchfab.com/3d-models/white-ceramic-plate-4036111d2c5c47bab2320202d5e9a2a4
+* author:	sterost (https://sketchfab.com/sterost)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
