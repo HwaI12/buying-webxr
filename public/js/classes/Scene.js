@@ -12,6 +12,7 @@ import { Light } from "./Light.js";
 import { FluorescentLight } from "./FluorescentLight.js";
 import { Camera } from "./Camera.js";
 import { DataCollector } from "./DataCollector.js";
+import { Product } from "./Product.js";
 
 export class Scene {
   /**
@@ -36,6 +37,14 @@ export class Scene {
     this.layoutPatterns = null; // 読み込んだレイアウトパターン
     this.selectedPattern = null; // 選択されたパターン
     this.currentPatternIndex = 0; // 現在のパターンインデックス
+
+    // 商品配置
+    this.productPlacementsData = null; // 読み込んだ商品配置データ（新フォーマット）
+    this.productPlacements = null; // 読み込んだ商品配置パターン
+    this.selectedProductPattern = null; // 選択された商品配置パターン
+    this.currentProductPatternIndex = 0; // 現在の商品配置パターンインデックス
+    this.products = []; // 配置された商品
+    this.isProductPlacementStarted = false; // 商品配置が開始されたかどうか
 
     // データ収集
     this.dataCollector = null;
@@ -65,6 +74,9 @@ export class Scene {
     // レイアウトパターンを読み込み
     await this.loadLayoutPatterns();
 
+    // 商品配置パターンを読み込み
+    await this.loadProductPlacements();
+
     // 各要素を作成
     this.createEnvironment();
     this.createFloor();
@@ -75,10 +87,8 @@ export class Scene {
     this.createShowcases();
     this.createObjects();
     this.createShowcaseItems(); // ショーケース内の物体を配置
+    // this.createProductsOnPlates(); // お皿の上に商品を配置 - 開始ボタンで手動開始
     this.createCamera();
-
-    // データ収集を初期化
-    this.initDataCollection();
   }
 
   /**
@@ -88,19 +98,28 @@ export class Scene {
     // 実験条件を収集
     const experimentConditions = {
       layoutPatternId: this.selectedPattern ? this.selectedPattern.id : null,
-      layoutPatternName: this.selectedPattern ? this.selectedPattern.name : null,
-      environmentId: this.config.environments ? this.config.environments[this.currentEnvironmentIndex].id : null,
-      environmentName: this.config.environments ? this.config.environments[this.currentEnvironmentIndex].name : null,
-      cameraPositionId: this.camera && this.camera.entity ? this.camera.entity.getAttribute('data-position-id') : null
+      layoutPatternName: this.selectedPattern
+        ? this.selectedPattern.name
+        : null,
+      environmentId: this.config.environments
+        ? this.config.environments[this.currentEnvironmentIndex].id
+        : null,
+      environmentName: this.config.environments
+        ? this.config.environments[this.currentEnvironmentIndex].name
+        : null,
+      cameraPositionId:
+        this.camera && this.camera.entity
+          ? this.camera.entity.getAttribute("data-position-id")
+          : null,
     };
 
     // DataCollectorインスタンスを作成
     this.dataCollector = new DataCollector({
       participantId: this.getParticipantId(),
-      experimentConditions: experimentConditions
+      experimentConditions: experimentConditions,
     });
 
-    console.log('データ収集を初期化しました');
+    console.log("データ収集を初期化しました");
   }
 
   /**
@@ -109,7 +128,7 @@ export class Scene {
    */
   getParticipantId() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('participantId') || `participant-${Date.now()}`;
+    return urlParams.get("participantId") || `participant-${Date.now()}`;
   }
 
   /**
@@ -117,7 +136,7 @@ export class Scene {
    */
   startDataCollection() {
     if (!this.dataCollector) {
-      console.error('DataCollectorが初期化されていません');
+      console.error("DataCollectorが初期化されていません");
       return;
     }
 
@@ -127,7 +146,7 @@ export class Scene {
     // カメラ位置の定期的な記録を開始
     this.startCameraTracking();
 
-    console.log('データ収集を開始しました');
+    console.log("データ収集を開始しました");
   }
 
   /**
@@ -135,7 +154,7 @@ export class Scene {
    */
   stopDataCollection() {
     if (!this.dataCollector) {
-      console.error('DataCollectorが初期化されていません');
+      console.error("DataCollectorが初期化されていません");
       return;
     }
 
@@ -148,7 +167,7 @@ export class Scene {
     // 統計情報をログ出力
     this.dataCollector.logStatistics();
 
-    console.log('データ収集を停止しました');
+    console.log("データ収集を停止しました");
   }
 
   /**
@@ -156,7 +175,7 @@ export class Scene {
    */
   startCameraTracking() {
     if (this.trackingInterval) {
-      console.warn('カメラ追跡は既に開始されています');
+      console.warn("カメラ追跡は既に開始されています");
       return;
     }
 
@@ -173,7 +192,11 @@ export class Scene {
         const targetProductId = gazedProduct ? gazedProduct.productId : null;
         const targetPosition = gazedProduct ? gazedProduct.position : null;
 
-        this.dataCollector.recordGaze(gazeDirection, targetProductId, targetPosition);
+        this.dataCollector.recordGaze(
+          gazeDirection,
+          targetProductId,
+          targetPosition
+        );
 
         // 商品との距離を記録
         this.recordProductDistances();
@@ -208,9 +231,13 @@ export class Scene {
     let closestIntersection = null;
     let closestDistance = Infinity;
 
+    // お皿をチェック
     this.showcaseItems.forEach((item) => {
       if (item.entity && item.entity.object3D) {
-        const intersects = raycaster.intersectObject(item.entity.object3D, true);
+        const intersects = raycaster.intersectObject(
+          item.entity.object3D,
+          true
+        );
 
         if (intersects.length > 0) {
           const intersection = intersects[0];
@@ -221,9 +248,35 @@ export class Scene {
               position: {
                 x: intersection.point.x,
                 y: intersection.point.y,
-                z: intersection.point.z
+                z: intersection.point.z,
               },
-              distance: intersection.distance
+              distance: intersection.distance,
+            };
+          }
+        }
+      }
+    });
+
+    // 商品をチェック（より優先的に）
+    this.products.forEach((product) => {
+      if (product.entity && product.entity.object3D) {
+        const intersects = raycaster.intersectObject(
+          product.entity.object3D,
+          true
+        );
+
+        if (intersects.length > 0) {
+          const intersection = intersects[0];
+          if (intersection.distance < closestDistance) {
+            closestDistance = intersection.distance;
+            closestIntersection = {
+              productId: product.id,
+              position: {
+                x: intersection.point.x,
+                y: intersection.point.y,
+                z: intersection.point.z,
+              },
+              distance: intersection.distance,
             };
           }
         }
@@ -242,8 +295,13 @@ export class Scene {
     }
 
     const cameraPos = this.camera.getWorldPosition();
-    const cameraPosVec = new THREE.Vector3(cameraPos.x, cameraPos.y, cameraPos.z);
+    const cameraPosVec = new THREE.Vector3(
+      cameraPos.x,
+      cameraPos.y,
+      cameraPos.z
+    );
 
+    // お皿との距離を記録
     this.showcaseItems.forEach((item) => {
       if (item.entity && item.entity.object3D) {
         const itemPos = new THREE.Vector3();
@@ -253,7 +311,7 @@ export class Scene {
 
         // 前回の距離と比較して接近中かどうかを判定
         const previousRecord = this.dataCollector.productDistances
-          .filter(record => record.productId === item.id)
+          .filter((record) => record.productId === item.id)
           .pop();
 
         const isApproaching = previousRecord
@@ -262,7 +320,39 @@ export class Scene {
 
         // 距離が一定範囲内の場合のみ記録（パフォーマンス最適化）
         if (distance < 10) {
-          this.dataCollector.recordProductDistance(item.id, distance, isApproaching);
+          this.dataCollector.recordProductDistance(
+            item.id,
+            distance,
+            isApproaching
+          );
+        }
+      }
+    });
+
+    // 商品との距離を記録
+    this.products.forEach((product) => {
+      if (product.entity && product.entity.object3D) {
+        const productPos = new THREE.Vector3();
+        product.entity.object3D.getWorldPosition(productPos);
+
+        const distance = cameraPosVec.distanceTo(productPos);
+
+        // 前回の距離と比較して接近中かどうかを判定
+        const previousRecord = this.dataCollector.productDistances
+          .filter((record) => record.productId === product.id)
+          .pop();
+
+        const isApproaching = previousRecord
+          ? distance < previousRecord.distance
+          : false;
+
+        // 距離が一定範囲内の場合のみ記録（パフォーマンス最適化）
+        if (distance < 10) {
+          this.dataCollector.recordProductDistance(
+            product.id,
+            distance,
+            isApproaching
+          );
         }
       }
     });
@@ -275,7 +365,7 @@ export class Scene {
     if (this.trackingInterval) {
       clearInterval(this.trackingInterval);
       this.trackingInterval = null;
-      console.log('カメラ追跡を停止しました');
+      console.log("カメラ追跡を停止しました");
     }
   }
 
@@ -486,6 +576,129 @@ export class Scene {
   }
 
   /**
+   * 商品配置パターンを読み込み
+   */
+  async loadProductPlacements() {
+    try {
+      const response = await fetch("./data/product-placements.json");
+      if (!response.ok) {
+        throw new Error(`JSONファイルの読み込みに失敗: ${response.status}`);
+      }
+      const data = await response.json();
+
+      // 新しいフォーマットのデータを保存
+      this.productPlacementsData = data;
+      this.productPlacements = { patterns: data.patterns };
+
+      // 単色配置パターンを選択（1番目のパターン）
+      const patterns = this.productPlacements.patterns;
+      this.currentProductPatternIndex = 0;
+      this.selectedProductPattern = patterns[this.currentProductPatternIndex];
+
+      console.log(
+        `選択された商品配置パターン: ${this.selectedProductPattern.name} (${this.selectedProductPattern.id})`
+      );
+      console.log(`説明: ${this.selectedProductPattern.description}`);
+    } catch (error) {
+      console.error("商品配置パターンの読み込みエラー:", error);
+      this.selectedProductPattern = null;
+    }
+  }
+
+  /**
+   * お皿の上に商品を配置
+   */
+  createProductsOnPlates() {
+    if (!this.selectedProductPattern) {
+      console.warn("商品配置パターンが選択されていません");
+      return;
+    }
+
+    if (!this.productPlacementsData) {
+      console.warn("商品配置データが読み込まれていません");
+      return;
+    }
+
+    // お皿の位置情報を取得するためのマップを作成
+    const platePositions = new Map();
+
+    // showcaseItemsから全てのお皿の位置を取得
+    this.showcaseItems.forEach((item) => {
+      if (item.entity && item.id.startsWith("plate-")) {
+        // object3D.positionを使用して正確な位置を取得
+        const pos3D = item.entity.object3D.position;
+        const position = { x: pos3D.x, y: pos3D.y, z: pos3D.z };
+        console.log(`お皿の位置取得: ${item.id}`, position);
+        platePositions.set(item.id, position);
+      }
+    });
+
+    console.log(`取得したお皿の数: ${platePositions.size}`);
+
+    // catalogとdefaultsを取得
+    const catalog = this.productPlacementsData.catalog.cakes;
+    const defaults = this.productPlacementsData.defaults.product;
+
+    // 商品を配置
+    this.selectedProductPattern.placements.forEach((placement) => {
+      const platePosition = platePositions.get(placement.plateId);
+
+      if (!platePosition) {
+        console.warn(`お皿が見つかりません: ${placement.plateId}`);
+        console.log("利用可能なお皿ID:", Array.from(platePositions.keys()));
+        return;
+      }
+
+      console.log(
+        `商品配置: ${placement.plateId} - ケーキ: ${placement.cake}`,
+        platePosition
+      );
+
+      // カタログからケーキ情報を取得
+      const cakeInfo = catalog[placement.cake];
+      if (!cakeInfo) {
+        console.warn(`ケーキ情報が見つかりません: ${placement.cake}`);
+        return;
+      }
+
+      // 完全なproductConfigを構築
+      const productConfig = {
+        id: `cake-${placement.plateId}`,
+        plateId: placement.plateId,
+        name: cakeInfo.name,
+        type: defaults.type,
+        geometry: { ...defaults.geometry },
+        material: {
+          ...defaults.material,
+          ...cakeInfo.material,
+        },
+        positionOffset: { ...defaults.transform.positionOffset },
+        rotation: { ...defaults.transform.rotation },
+        scale: { ...defaults.transform.scale },
+      };
+
+      // Productインスタンスを作成
+      const product = new Product(productConfig, platePosition);
+
+      // アセットを作成（モデルの場合）
+      if (productConfig.type === "model") {
+        product.createAsset(this.assetsElement);
+      }
+
+      // エンティティを作成
+      product.create(this.sceneElement);
+
+      // 商品リストに追加
+      this.products.push(product);
+
+      // 商品選択イベントを設定
+      this.setupProductInteraction(product);
+    });
+
+    console.log(`${this.products.length}個の商品をお皿の上に配置しました`);
+  }
+
+  /**
    * 次のパターンに切り替え
    */
   switchToNextPattern() {
@@ -493,6 +706,10 @@ export class Scene {
       console.error("レイアウトパターンが読み込まれていません");
       return false;
     }
+
+    // 現在の商品を削除
+    this.products.forEach((product) => product.remove());
+    this.products = [];
 
     // 現在のショーケースアイテムを削除
     this.showcaseItems.forEach((item) => item.remove());
@@ -512,6 +729,40 @@ export class Scene {
     // 新しいパターンでアイテムを作成
     this.createShowcaseItems();
 
+    // 新しいパターンで商品を配置
+    this.createProductsOnPlates();
+
+    return true;
+  }
+
+  /**
+   * 次の商品配置パターンに切り替え
+   */
+  switchToNextProductPattern() {
+    if (!this.productPlacements || !this.productPlacements.patterns) {
+      console.error("商品配置パターンが読み込まれていません");
+      return false;
+    }
+
+    // 現在の商品を削除
+    this.products.forEach((product) => product.remove());
+    this.products = [];
+
+    // 次のパターンに進む（最後に達したら最初に戻る）
+    this.currentProductPatternIndex =
+      (this.currentProductPatternIndex + 1) %
+      this.productPlacements.patterns.length;
+    this.selectedProductPattern =
+      this.productPlacements.patterns[this.currentProductPatternIndex];
+
+    console.log(
+      `商品配置パターン切り替え: ${this.selectedProductPattern.name} (${this.selectedProductPattern.id})`
+    );
+    console.log(`説明: ${this.selectedProductPattern.description}`);
+
+    // 新しいパターンで商品を配置
+    this.createProductsOnPlates();
+
     return true;
   }
 
@@ -530,6 +781,50 @@ export class Scene {
       index: this.currentPatternIndex,
       total: this.layoutPatterns ? this.layoutPatterns.patterns.length : 0,
     };
+  }
+
+  /**
+   * 現在の商品配置パターン情報を取得
+   * @returns {Object|null}
+   */
+  getCurrentProductPatternInfo() {
+    if (!this.selectedProductPattern) {
+      return null;
+    }
+    return {
+      id: this.selectedProductPattern.id,
+      name: this.selectedProductPattern.name,
+      description: this.selectedProductPattern.description,
+      index: this.currentProductPatternIndex,
+      total: this.productPlacements
+        ? this.productPlacements.patterns.length
+        : 0,
+    };
+  }
+
+  /**
+   * 商品配置を開始
+   */
+  startProductPlacement() {
+    if (this.isProductPlacementStarted) {
+      console.warn("商品配置は既に開始されています");
+      return false;
+    }
+
+    // 商品を配置
+    this.createProductsOnPlates();
+    this.isProductPlacementStarted = true;
+
+    console.log("商品配置を開始しました");
+    return true;
+  }
+
+  /**
+   * 商品配置が開始されているかどうかを取得
+   * @returns {boolean}
+   */
+  isProductPlacementActive() {
+    return this.isProductPlacementStarted;
   }
 
   /**
@@ -566,13 +861,13 @@ export class Scene {
     // クリックイベント
     item.onClick((productId, event) => {
       if (this.dataCollector) {
-        this.dataCollector.recordProductSelection(productId, 'click');
+        this.dataCollector.recordProductSelection(productId, "click");
         console.log(`商品選択: ${productId} (クリック)`);
       }
 
       // カスタムイベントを発火（UI更新などに使用）
-      const customEvent = new CustomEvent('product-selected', {
-        detail: { productId: productId, method: 'click' }
+      const customEvent = new CustomEvent("product-selected", {
+        detail: { productId: productId, method: "click" },
       });
       document.dispatchEvent(customEvent);
     });
@@ -729,6 +1024,10 @@ export class Scene {
     this.showcaseItems.forEach((item) => item.remove());
     this.showcaseItems = [];
 
+    // 商品を削除
+    this.products.forEach((product) => product.remove());
+    this.products = [];
+
     // 床を削除
     if (this.floor) {
       this.floor.remove();
@@ -762,6 +1061,7 @@ export class Scene {
 
     // レイアウトパターンをリセット
     this.selectedPattern = null;
+    this.selectedProductPattern = null;
   }
 
   /**

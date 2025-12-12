@@ -2,8 +2,8 @@
   "patterns": [
     {
       "id": "plates-vertical-row",
-      "name": "お皿縦配置",
-      "description": "ショーケース内にお皿を縦一列に3枚配置",
+      "name": "お皿配置",
+      "description": "ショーケース内にお皿を配置",
       "showcases": [
         {
           "showcaseId": "showcase-1",

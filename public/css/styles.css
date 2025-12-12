@@ -79,11 +79,73 @@
   opacity: 0.6;
 }
 
+/* 商品配置パターン切り替えパネル */
+#product-pattern-control-panel {
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  padding: 8px;
+  font-family: -apple-system, sans-serif;
+  font-size: 11px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 130px;
+}
+
+#product-pattern-info {
+  margin-bottom: 6px;
+}
+
+#product-pattern-info strong {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.5;
+}
+
+#current-product-pattern-name {
+  display: block;
+  margin-top: 2px;
+  color: #9c27b0;
+  font-weight: 500;
+  font-size: 11px;
+}
+
+#next-product-pattern-btn {
+  width: 100%;
+  padding: 6px 10px;
+  background: #9c27b0;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+#next-product-pattern-btn:hover {
+  opacity: 0.85;
+}
+
+#next-product-pattern-btn:active {
+  opacity: 0.7;
+}
+
+#next-product-pattern-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* 環境切り替えパネル */
 #environment-control-panel {
   position: fixed;
   bottom: 8px;
-  left: 162px;
+  left: 165px;
   background: rgba(255, 255, 255, 0.95);
   color: #333;
   padding: 8px;
@@ -240,10 +302,16 @@
     bottom: 8px;
   }
 
+  #product-pattern-control-panel {
+    min-width: 120px;
+    left: 8px;
+    bottom: 70px;
+  }
+
   #environment-control-panel {
     min-width: 100px;
     left: 8px;
-    bottom: 70px;
+    bottom: 132px;
   }
 
   #data-collection-panel {

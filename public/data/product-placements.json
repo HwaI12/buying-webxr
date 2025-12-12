@@ -1,0 +1,131 @@
+{
+  "version": "1.0",
+  "domain": "showcase-cakes",
+  "plates": {
+    "grid": { "showcases": [1, 2], "rows": [1, 2, 3, 4], "cols": [1, 2, 3] },
+    "idFormat": "plate-{showcase}-{row}-{col}"
+  },
+  "defaults": {
+    "product": {
+      "type": "primitive",
+      "geometry": { "primitive": "cylinder", "radius": 0.12, "height": 0.09 },
+      "material": { "roughness": 0.3, "metalness": 0.1 },
+      "transform": {
+        "positionOffset": { "x": 0, "y": 0.13, "z": 0 },
+        "rotation": { "x": 0, "y": 0, "z": 0 },
+        "scale": { "x": 2.8, "y": 2.8, "z": 2.8 }
+      }
+    }
+  },
+  "catalog": {
+    "cakes": {
+      "white": { "name": "白いケーキ", "material": { "color": "#FFFFFF" } },
+      "red": { "name": "赤いケーキ", "material": { "color": "#FF6B6B" } },
+      "brown": { "name": "茶色いケーキ", "material": { "color": "#8B4513" } },
+      "orange": {
+        "name": "オレンジケーキ",
+        "material": { "color": "#FFA500" }
+      },
+      "lime": { "name": "黄緑ケーキ", "material": { "color": "#9ACD32" } },
+      "pink": { "name": "ピンクケーキ", "material": { "color": "#FFB6C1" } }
+    }
+  },
+  "patterns": [
+    {
+      "id": "single-color",
+      "name": "同系色配置",
+      "description": "全て同じ色（白）のケーキを配置",
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "white" },
+        { "plateId": "plate-1-1-2", "cake": "red" },
+        { "plateId": "plate-1-1-3", "cake": "brown" },
+        { "plateId": "plate-1-2-1", "cake": "white" },
+        { "plateId": "plate-1-2-2", "cake": "red" },
+        { "plateId": "plate-1-2-3", "cake": "brown" },
+        { "plateId": "plate-1-3-1", "cake": "white" },
+        { "plateId": "plate-1-3-2", "cake": "red" },
+        { "plateId": "plate-1-3-3", "cake": "brown" },
+        { "plateId": "plate-1-4-1", "cake": "white" },
+        { "plateId": "plate-1-4-2", "cake": "red" },
+        { "plateId": "plate-1-4-3", "cake": "brown" },
+
+        { "plateId": "plate-2-1-1", "cake": "orange" },
+        { "plateId": "plate-2-1-2", "cake": "lime" },
+        { "plateId": "plate-2-1-3", "cake": "pink" },
+        { "plateId": "plate-2-2-1", "cake": "orange" },
+        { "plateId": "plate-2-2-2", "cake": "lime" },
+        { "plateId": "plate-2-2-3", "cake": "pink" },
+        { "plateId": "plate-2-3-1", "cake": "orange" },
+        { "plateId": "plate-2-3-2", "cake": "lime" },
+        { "plateId": "plate-2-3-3", "cake": "pink" },
+        { "plateId": "plate-2-4-1", "cake": "orange" },
+        { "plateId": "plate-2-4-2", "cake": "lime" },
+        { "plateId": "plate-2-4-3", "cake": "pink" }
+      ]
+    },
+    {
+      "id": "random-multi-color",
+      "name": "ランダム配置",
+      "description": "バラバラにいろんな色のケーキを配置（左右で非対称）",
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "white" },
+        { "plateId": "plate-1-1-2", "cake": "red" },
+        { "plateId": "plate-1-1-3", "cake": "brown" },
+        { "plateId": "plate-1-2-1", "cake": "orange" },
+        { "plateId": "plate-1-2-2", "cake": "lime" },
+        { "plateId": "plate-1-2-3", "cake": "pink" },
+        { "plateId": "plate-1-3-1", "cake": "red" },
+        { "plateId": "plate-1-3-2", "cake": "orange" },
+        { "plateId": "plate-1-3-3", "cake": "white" },
+        { "plateId": "plate-1-4-1", "cake": "brown" },
+        { "plateId": "plate-1-4-2", "cake": "pink" },
+        { "plateId": "plate-1-4-3", "cake": "lime" },
+
+        { "plateId": "plate-2-1-1", "cake": "lime" },
+        { "plateId": "plate-2-1-2", "cake": "white" },
+        { "plateId": "plate-2-1-3", "cake": "pink" },
+        { "plateId": "plate-2-2-1", "cake": "brown" },
+        { "plateId": "plate-2-2-2", "cake": "red" },
+        { "plateId": "plate-2-2-3", "cake": "orange" },
+        { "plateId": "plate-2-3-1", "cake": "orange" },
+        { "plateId": "plate-2-3-2", "cake": "lime" },
+        { "plateId": "plate-2-3-3", "cake": "red" },
+        { "plateId": "plate-2-4-1", "cake": "white" },
+        { "plateId": "plate-2-4-2", "cake": "brown" },
+        { "plateId": "plate-2-4-3", "cake": "pink" }
+      ]
+    },
+    {
+      "id": "symmetric-same-position",
+      "name": "同位置対称（完全一致）",
+      "description": "左右ショーケースで同じ(row,col)に同じ色を置く（ミラー反転ではなくコピー）",
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "red" },
+        { "plateId": "plate-1-1-2", "cake": "white" },
+        { "plateId": "plate-1-1-3", "cake": "orange" },
+        { "plateId": "plate-1-2-1", "cake": "pink" },
+        { "plateId": "plate-1-2-2", "cake": "brown" },
+        { "plateId": "plate-1-2-3", "cake": "lime" },
+        { "plateId": "plate-1-3-1", "cake": "white" },
+        { "plateId": "plate-1-3-2", "cake": "orange" },
+        { "plateId": "plate-1-3-3", "cake": "red" },
+        { "plateId": "plate-1-4-1", "cake": "lime" },
+        { "plateId": "plate-1-4-2", "cake": "pink" },
+        { "plateId": "plate-1-4-3", "cake": "brown" },
+
+        { "plateId": "plate-2-1-1", "cake": "red" },
+        { "plateId": "plate-2-1-2", "cake": "white" },
+        { "plateId": "plate-2-1-3", "cake": "orange" },
+        { "plateId": "plate-2-2-1", "cake": "pink" },
+        { "plateId": "plate-2-2-2", "cake": "brown" },
+        { "plateId": "plate-2-2-3", "cake": "lime" },
+        { "plateId": "plate-2-3-1", "cake": "white" },
+        { "plateId": "plate-2-3-2", "cake": "orange" },
+        { "plateId": "plate-2-3-3", "cake": "red" },
+        { "plateId": "plate-2-4-1", "cake": "lime" },
+        { "plateId": "plate-2-4-2", "cake": "pink" },
+        { "plateId": "plate-2-4-3", "cake": "brown" }
+      ]
+    }
+  ]
+}

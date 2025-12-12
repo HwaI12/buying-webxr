@@ -2,22 +2,22 @@
  * メインエントリーポイント
  * アプリケーションの初期化とシーン管理
  */
-import { Scene } from './classes/Scene.js';
-import { CONFIG } from './config.js';
+import { Scene } from "./classes/Scene.js";
+import { CONFIG } from "./config.js";
 
 /**
  * アプリケーション初期化
  */
 function initApp() {
   // A-Frameシーンが読み込まれるのを待つ
-  const sceneEl = document.querySelector('a-scene');
+  const sceneEl = document.querySelector("a-scene");
 
   if (sceneEl.hasLoaded) {
     // すでに読み込まれている場合
     onSceneLoaded();
   } else {
     // 読み込み完了を待つ
-    sceneEl.addEventListener('loaded', onSceneLoaded);
+    sceneEl.addEventListener("loaded", onSceneLoaded);
   }
 }
 
@@ -25,7 +25,7 @@ function initApp() {
  * シーン読み込み完了時の処理
  */
 async function onSceneLoaded() {
-  console.log('A-Frameシーンが読み込まれました');
+  console.log("A-Frameシーンが読み込まれました");
 
   // シーンを初期化
   const scene = new Scene(CONFIG);
@@ -34,60 +34,66 @@ async function onSceneLoaded() {
   // グローバルスコープに公開（デバッグ用）
   window.appScene = scene;
 
-  // パターン切り替えボタンの設定
-  setupPatternControls(scene);
+  // 商品配置を自動開始
+  scene.startProductPlacement();
+
+  // 商品配置パターン切り替えボタンの設定
+  setupProductPatternControls(scene);
 
   // 環境切り替えボタンの設定
   setupEnvironmentControls(scene);
 
-  // データ収集コントロールの設定
-  setupDataCollectionControls(scene);
-
-  console.log('アプリケーションの初期化が完了しました');
-  console.log('デバッグ: window.appScene でシーンにアクセスできます');
+  console.log("アプリケーションの初期化が完了しました");
+  console.log("デバッグ: window.appScene でシーンにアクセスできます");
 }
 
 /**
- * パターン切り替えコントロールを設定
+ * 商品配置パターン切り替えコントロールを設定
  * @param {Scene} scene - シーンインスタンス
  */
-function setupPatternControls(scene) {
-  const patternNameElement = document.getElementById('current-pattern-name');
-  const nextPatternBtn = document.getElementById('next-pattern-btn');
+function setupProductPatternControls(scene) {
+  const productPatternNameElement = document.getElementById(
+    "current-product-pattern-name"
+  );
+  const nextProductPatternBtn = document.getElementById(
+    "next-product-pattern-btn"
+  );
 
-  // 現在のパターン名を表示
-  function updatePatternDisplay() {
-    const patternInfo = scene.getCurrentPatternInfo();
+  // 現在の商品配置パターン名を表示
+  function updateProductPatternDisplay() {
+    const patternInfo = scene.getCurrentProductPatternInfo();
     if (patternInfo) {
-      patternNameElement.textContent = `${patternInfo.name} (${patternInfo.index + 1}/${patternInfo.total})`;
+      productPatternNameElement.textContent = `${patternInfo.name} (${
+        patternInfo.index + 1
+      }/${patternInfo.total})`;
     } else {
-      patternNameElement.textContent = '読み込みエラー';
+      productPatternNameElement.textContent = "読み込みエラー";
     }
   }
 
   // 初期表示
-  updatePatternDisplay();
+  updateProductPatternDisplay();
 
-  // ボタンクリックイベント
-  nextPatternBtn.addEventListener('click', () => {
+  // 次へボタンクリックイベント
+  nextProductPatternBtn.addEventListener("click", () => {
     // ボタンを一時的に無効化
-    nextPatternBtn.disabled = true;
+    nextProductPatternBtn.disabled = true;
 
     // パターン切り替え
-    const success = scene.switchToNextPattern();
+    const success = scene.switchToNextProductPattern();
 
     if (success) {
       // 表示を更新
-      updatePatternDisplay();
+      updateProductPatternDisplay();
     }
 
     // ボタンを再度有効化（短い遅延）
     setTimeout(() => {
-      nextPatternBtn.disabled = false;
+      nextProductPatternBtn.disabled = false;
     }, 100);
   });
 
-  console.log('パターン切り替えコントロールを設定しました');
+  console.log("商品配置パターン切り替えコントロールを設定しました");
 }
 
 /**
@@ -95,16 +101,22 @@ function setupPatternControls(scene) {
  * @param {Scene} scene - シーンインスタンス
  */
 function setupEnvironmentControls(scene) {
-  const environmentNameElement = document.getElementById('current-environment-name');
-  const switchEnvironmentBtn = document.getElementById('switch-environment-btn');
+  const environmentNameElement = document.getElementById(
+    "current-environment-name"
+  );
+  const switchEnvironmentBtn = document.getElementById(
+    "switch-environment-btn"
+  );
 
   // 現在の環境名を表示
   function updateEnvironmentDisplay() {
     const envInfo = scene.getCurrentEnvironmentInfo();
     if (envInfo) {
-      environmentNameElement.textContent = `${envInfo.name} (${envInfo.index + 1}/${envInfo.total})`;
+      environmentNameElement.textContent = `${envInfo.name} (${
+        envInfo.index + 1
+      }/${envInfo.total})`;
     } else {
-      environmentNameElement.textContent = '読み込みエラー';
+      environmentNameElement.textContent = "読み込みエラー";
     }
   }
 
@@ -112,7 +124,7 @@ function setupEnvironmentControls(scene) {
   updateEnvironmentDisplay();
 
   // ボタンクリックイベント
-  switchEnvironmentBtn.addEventListener('click', () => {
+  switchEnvironmentBtn.addEventListener("click", () => {
     // ボタンを一時的に無効化
     switchEnvironmentBtn.disabled = true;
 
@@ -130,86 +142,14 @@ function setupEnvironmentControls(scene) {
     }, 100);
   });
 
-  console.log('環境切り替えコントロールを設定しました');
-}
-
-/**
- * データ収集コントロールを設定
- * @param {Scene} scene - シーンインスタンス
- */
-function setupDataCollectionControls(scene) {
-  const recordingStatusElement = document.getElementById('recording-status');
-  const startRecordingBtn = document.getElementById('start-recording-btn');
-  const stopRecordingBtn = document.getElementById('stop-recording-btn');
-  const exportJsonBtn = document.getElementById('export-json-btn');
-  const exportCsvBtn = document.getElementById('export-csv-btn');
-
-  let isRecording = false;
-
-  // 開始ボタンクリックイベント
-  startRecordingBtn.addEventListener('click', () => {
-    if (isRecording) return;
-
-    // データ収集を開始
-    scene.startDataCollection();
-    isRecording = true;
-
-    // UI更新
-    recordingStatusElement.textContent = '記録中...';
-    recordingStatusElement.className = 'recording';
-    startRecordingBtn.disabled = true;
-    stopRecordingBtn.disabled = false;
-    exportJsonBtn.disabled = true;
-    exportCsvBtn.disabled = true;
-
-    console.log('データ収集を開始しました');
-  });
-
-  // 停止ボタンクリックイベント
-  stopRecordingBtn.addEventListener('click', () => {
-    if (!isRecording) return;
-
-    // データ収集を停止
-    scene.stopDataCollection();
-    isRecording = false;
-
-    // UI更新
-    recordingStatusElement.textContent = '停止中（データあり）';
-    recordingStatusElement.className = 'stopped';
-    startRecordingBtn.disabled = false;
-    stopRecordingBtn.disabled = true;
-    exportJsonBtn.disabled = false;
-    exportCsvBtn.disabled = false;
-
-    console.log('データ収集を停止しました');
-  });
-
-  // JSONエクスポートボタン
-  exportJsonBtn.addEventListener('click', () => {
-    const dataCollector = scene.getDataCollector();
-    if (dataCollector) {
-      dataCollector.downloadData('json');
-      console.log('データをJSONでエクスポートしました');
-    }
-  });
-
-  // CSVエクスポートボタン
-  exportCsvBtn.addEventListener('click', () => {
-    const dataCollector = scene.getDataCollector();
-    if (dataCollector) {
-      dataCollector.downloadData('csv');
-      console.log('データをCSVでエクスポートしました');
-    }
-  });
-
-  console.log('データ収集コントロールを設定しました');
+  console.log("環境切り替えコントロールを設定しました");
 }
 
 /**
  * DOM読み込み完了時にアプリケーションを初期化
  */
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
 } else {
   initApp();
 }

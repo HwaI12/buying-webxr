@@ -13,21 +13,19 @@
     <link rel="stylesheet" href="./css/styles.css" />
 
     <!-- アプリケーションメインスクリプト（ES6モジュール） -->
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/main.js?v=2"></script>
   </head>
   <body>
     <!-- 情報パネル -->
-    <div id="info-panel">
-      WASD移動 / マウス視点
-    </div>
+    <div id="info-panel">WASD移動 / マウス視点</div>
 
-    <!-- パターン切り替えパネル -->
-    <div id="pattern-control-panel">
-      <div id="pattern-info">
-        <strong>パターン</strong><br />
-        <span id="current-pattern-name">...</span>
+    <!-- 商品配置パターン切り替えパネル -->
+    <div id="product-pattern-control-panel">
+      <div id="product-pattern-info">
+        <strong>商品配置</strong><br />
+        <span id="current-product-pattern-name">読み込み中...</span>
       </div>
-      <button id="next-pattern-btn">次へ</button>
+      <button id="next-product-pattern-btn">次へ</button>
     </div>
 
     <!-- 環境切り替えパネル -->
@@ -37,18 +35,6 @@
         <span id="current-environment-name">朝</span>
       </div>
       <button id="switch-environment-btn">切替</button>
-    </div>
-
-    <!-- データ収集コントロールパネル -->
-    <div id="data-collection-panel">
-      <div id="data-collection-info">
-        <strong>データ収集</strong><br />
-        <span id="recording-status">停止中</span>
-      </div>
-      <button id="start-recording-btn">開始</button>
-      <button id="stop-recording-btn" disabled>停止</button>
-      <button id="export-json-btn" disabled>JSON</button>
-      <button id="export-csv-btn" disabled>CSV</button>
     </div>
 
     <!-- A-Frameシーン（JavaScriptで動的に生成） -->
