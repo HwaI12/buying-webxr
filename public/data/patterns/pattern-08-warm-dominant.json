@@ -1,0 +1,45 @@
+{
+  "id": "pattern-08-warm-dominant",
+  "name": "暖色優位",
+  "description": "暖色（赤・橙・ピンク・茶）を主体に配置し、白を最小限に抑える",
+  "researchPurpose": "暖色優位配置が購買意欲に与える影響を検証。既存研究の「暖色は食欲を喚起する」仮説を検証",
+  "factors": {
+    "colorDiversity": "multicolor",
+    "colorTemperature": "warm-dominant",
+    "harmony": "analogous",
+    "accent": "none",
+    "symmetry": "copy"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "高",
+    "attractiveness": "高",
+    "clarity": "中",
+    "rationale": "暖色が食欲・購買意欲を強く喚起すると予想。色彩心理の既存知見と整合する結果が期待される"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "red" },
+    { "plateId": "plate-1-1-2", "cake": "orange" },
+    { "plateId": "plate-1-1-3", "cake": "pink" },
+    { "plateId": "plate-1-2-1", "cake": "brown" },
+    { "plateId": "plate-1-2-2", "cake": "red" },
+    { "plateId": "plate-1-2-3", "cake": "orange" },
+    { "plateId": "plate-1-3-1", "cake": "pink" },
+    { "plateId": "plate-1-3-2", "cake": "brown" },
+    { "plateId": "plate-1-3-3", "cake": "red" },
+    { "plateId": "plate-1-4-1", "cake": "orange" },
+    { "plateId": "plate-1-4-2", "cake": "pink" },
+    { "plateId": "plate-1-4-3", "cake": "white" },
+    { "plateId": "plate-2-1-1", "cake": "red" },
+    { "plateId": "plate-2-1-2", "cake": "orange" },
+    { "plateId": "plate-2-1-3", "cake": "pink" },
+    { "plateId": "plate-2-2-1", "cake": "brown" },
+    { "plateId": "plate-2-2-2", "cake": "red" },
+    { "plateId": "plate-2-2-3", "cake": "orange" },
+    { "plateId": "plate-2-3-1", "cake": "pink" },
+    { "plateId": "plate-2-3-2", "cake": "brown" },
+    { "plateId": "plate-2-3-3", "cake": "red" },
+    { "plateId": "plate-2-4-1", "cake": "orange" },
+    { "plateId": "plate-2-4-2", "cake": "pink" },
+    { "plateId": "plate-2-4-3", "cake": "white" }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "pattern-10-vertical-gradient",
+  "name": "垂直グラデーション",
+  "description": "上から下へ暖色から寒色へのグラデーション（赤→橙→ピンク→黄緑）",
+  "researchPurpose": "垂直方向のグラデーションが視線の動きと評価に与える影響を検証。対角グラデーション（pattern-04）との比較",
+  "factors": {
+    "colorDiversity": "multicolor",
+    "colorTemperature": "gradient-warm-to-cool",
+    "harmony": "gradient",
+    "accent": "none",
+    "symmetry": "copy",
+    "gradient": "vertical"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "中-高",
+    "attractiveness": "高",
+    "clarity": "中-高",
+    "rationale": "垂直グラデーションにより視線が自然に上から下へ流れ、調和的な印象を与えると予想"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "red" },
+    { "plateId": "plate-1-1-2", "cake": "red" },
+    { "plateId": "plate-1-1-3", "cake": "red" },
+    { "plateId": "plate-1-2-1", "cake": "orange" },
+    { "plateId": "plate-1-2-2", "cake": "orange" },
+    { "plateId": "plate-1-2-3", "cake": "orange" },
+    { "plateId": "plate-1-3-1", "cake": "pink" },
+    { "plateId": "plate-1-3-2", "cake": "pink" },
+    { "plateId": "plate-1-3-3", "cake": "pink" },
+    { "plateId": "plate-1-4-1", "cake": "lime" },
+    { "plateId": "plate-1-4-2", "cake": "lime" },
+    { "plateId": "plate-1-4-3", "cake": "lime" },
+    { "plateId": "plate-2-1-1", "cake": "red" },
+    { "plateId": "plate-2-1-2", "cake": "red" },
+    { "plateId": "plate-2-1-3", "cake": "red" },
+    { "plateId": "plate-2-2-1", "cake": "orange" },
+    { "plateId": "plate-2-2-2", "cake": "orange" },
+    { "plateId": "plate-2-2-3", "cake": "orange" },
+    { "plateId": "plate-2-3-1", "cake": "pink" },
+    { "plateId": "plate-2-3-2", "cake": "pink" },
+    { "plateId": "plate-2-3-3", "cake": "pink" },
+    { "plateId": "plate-2-4-1", "cake": "lime" },
+    { "plateId": "plate-2-4-2", "cake": "lime" },
+    { "plateId": "plate-2-4-3", "cake": "lime" }
+  ]
+}

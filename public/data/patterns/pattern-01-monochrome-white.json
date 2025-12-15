@@ -1,0 +1,45 @@
+{
+  "id": "pattern-01-monochrome-white",
+  "name": "単色（白）",
+  "description": "全て白で統一（単色の対照条件）",
+  "researchPurpose": "ニュートラルな基準条件。他パターンとの比較対象として使用",
+  "factors": {
+    "colorDiversity": "monochrome",
+    "colorTemperature": "neutral",
+    "harmony": "monochrome",
+    "accent": "none",
+    "symmetry": "copy"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "低",
+    "attractiveness": "低",
+    "clarity": "高",
+    "rationale": "刺激が少なく単調なため魅力度・購買意欲は低いが、視認性は高いと予想"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "white" },
+    { "plateId": "plate-1-1-2", "cake": "white" },
+    { "plateId": "plate-1-1-3", "cake": "white" },
+    { "plateId": "plate-1-2-1", "cake": "white" },
+    { "plateId": "plate-1-2-2", "cake": "white" },
+    { "plateId": "plate-1-2-3", "cake": "white" },
+    { "plateId": "plate-1-3-1", "cake": "white" },
+    { "plateId": "plate-1-3-2", "cake": "white" },
+    { "plateId": "plate-1-3-3", "cake": "white" },
+    { "plateId": "plate-1-4-1", "cake": "white" },
+    { "plateId": "plate-1-4-2", "cake": "white" },
+    { "plateId": "plate-1-4-3", "cake": "white" },
+    { "plateId": "plate-2-1-1", "cake": "white" },
+    { "plateId": "plate-2-1-2", "cake": "white" },
+    { "plateId": "plate-2-1-3", "cake": "white" },
+    { "plateId": "plate-2-2-1", "cake": "white" },
+    { "plateId": "plate-2-2-2", "cake": "white" },
+    { "plateId": "plate-2-2-3", "cake": "white" },
+    { "plateId": "plate-2-3-1", "cake": "white" },
+    { "plateId": "plate-2-3-2", "cake": "white" },
+    { "plateId": "plate-2-3-3", "cake": "white" },
+    { "plateId": "plate-2-4-1", "cake": "white" },
+    { "plateId": "plate-2-4-2", "cake": "white" },
+    { "plateId": "plate-2-4-3", "cake": "white" }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "pattern-02-monochrome-red",
+  "name": "単色（赤）",
+  "description": "全て赤で統一（高刺激色の単色条件）",
+  "researchPurpose": "暖色・高刺激色の効果を検証。単色でも色によって評価が変わるか確認",
+  "factors": {
+    "colorDiversity": "monochrome",
+    "colorTemperature": "warm-high",
+    "harmony": "monochrome",
+    "accent": "none",
+    "symmetry": "copy"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "中-高",
+    "attractiveness": "中",
+    "clarity": "中",
+    "rationale": "赤色が食欲・購買意欲を喚起する一方、単色の単調さが魅力度を下げる可能性"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "red" },
+    { "plateId": "plate-1-1-2", "cake": "red" },
+    { "plateId": "plate-1-1-3", "cake": "red" },
+    { "plateId": "plate-1-2-1", "cake": "red" },
+    { "plateId": "plate-1-2-2", "cake": "red" },
+    { "plateId": "plate-1-2-3", "cake": "red" },
+    { "plateId": "plate-1-3-1", "cake": "red" },
+    { "plateId": "plate-1-3-2", "cake": "red" },
+    { "plateId": "plate-1-3-3", "cake": "red" },
+    { "plateId": "plate-1-4-1", "cake": "red" },
+    { "plateId": "plate-1-4-2", "cake": "red" },
+    { "plateId": "plate-1-4-3", "cake": "red" },
+    { "plateId": "plate-2-1-1", "cake": "red" },
+    { "plateId": "plate-2-1-2", "cake": "red" },
+    { "plateId": "plate-2-1-3", "cake": "red" },
+    { "plateId": "plate-2-2-1", "cake": "red" },
+    { "plateId": "plate-2-2-2", "cake": "red" },
+    { "plateId": "plate-2-2-3", "cake": "red" },
+    { "plateId": "plate-2-3-1", "cake": "red" },
+    { "plateId": "plate-2-3-2", "cake": "red" },
+    { "plateId": "plate-2-3-3", "cake": "red" },
+    { "plateId": "plate-2-4-1", "cake": "red" },
+    { "plateId": "plate-2-4-2", "cake": "red" },
+    { "plateId": "plate-2-4-3", "cake": "red" }
+  ]
+}

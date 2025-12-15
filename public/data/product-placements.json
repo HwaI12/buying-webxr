@@ -1,10 +1,24 @@
 {
-  "version": "1.0",
+  "version": "1.0-survey-only",
   "domain": "showcase-cakes",
+  "metadata": {
+    "title": "Color Pattern Evaluation (Survey Only)",
+    "createdAt": "2025-12-15",
+    "notes": "No gaze/movement logs. Within-subject, randomized order."
+  },
+
+  "environment": {
+    "lighting": { "intensity": 1.0, "colorTemperatureK": 5000 },
+    "booth": { "wallColor": "#FFFFFF", "floorColor": "#E6E6E6" },
+    "startPose": { "position": { "x": 0, "y": 1.6, "z": 2.2 }, "yawDeg": 180 },
+    "ui": { "language": "ja", "showTimer": true, "showTaskText": true }
+  },
+
   "plates": {
     "grid": { "showcases": [1, 2], "rows": [1, 2, 3, 4], "cols": [1, 2, 3] },
     "idFormat": "plate-{showcase}-{row}-{col}"
   },
+
   "defaults": {
     "product": {
       "type": "primitive",
@@ -17,6 +31,7 @@
       }
     }
   },
+
   "catalog": {
     "cakes": {
       "white": { "name": "白いケーキ", "material": { "color": "#FFFFFF" } },
@@ -32,73 +47,196 @@
   },
   "patterns": [
     {
-      "id": "single-color",
-      "name": "同系色配置",
-      "description": "全て同じ色（白）のケーキを配置",
+      "id": "monochrome-white",
+      "name": "単色（白）",
+      "description": "全て白で統一（単色の対照条件）",
+      "factors": {
+        "harmony": "monochrome",
+        "accent": "none",
+        "symmetry": "copy"
+      },
       "placements": [
         { "plateId": "plate-1-1-1", "cake": "white" },
-        { "plateId": "plate-1-1-2", "cake": "red" },
-        { "plateId": "plate-1-1-3", "cake": "brown" },
+        { "plateId": "plate-1-1-2", "cake": "white" },
+        { "plateId": "plate-1-1-3", "cake": "white" },
         { "plateId": "plate-1-2-1", "cake": "white" },
-        { "plateId": "plate-1-2-2", "cake": "red" },
-        { "plateId": "plate-1-2-3", "cake": "brown" },
+        { "plateId": "plate-1-2-2", "cake": "white" },
+        { "plateId": "plate-1-2-3", "cake": "white" },
         { "plateId": "plate-1-3-1", "cake": "white" },
-        { "plateId": "plate-1-3-2", "cake": "red" },
-        { "plateId": "plate-1-3-3", "cake": "brown" },
+        { "plateId": "plate-1-3-2", "cake": "white" },
+        { "plateId": "plate-1-3-3", "cake": "white" },
         { "plateId": "plate-1-4-1", "cake": "white" },
+        { "plateId": "plate-1-4-2", "cake": "white" },
+        { "plateId": "plate-1-4-3", "cake": "white" },
+
+        { "plateId": "plate-2-1-1", "cake": "white" },
+        { "plateId": "plate-2-1-2", "cake": "white" },
+        { "plateId": "plate-2-1-3", "cake": "white" },
+        { "plateId": "plate-2-2-1", "cake": "white" },
+        { "plateId": "plate-2-2-2", "cake": "white" },
+        { "plateId": "plate-2-2-3", "cake": "white" },
+        { "plateId": "plate-2-3-1", "cake": "white" },
+        { "plateId": "plate-2-3-2", "cake": "white" },
+        { "plateId": "plate-2-3-3", "cake": "white" },
+        { "plateId": "plate-2-4-1", "cake": "white" },
+        { "plateId": "plate-2-4-2", "cake": "white" },
+        { "plateId": "plate-2-4-3", "cake": "white" }
+      ]
+    },
+    {
+      "id": "monochrome-red",
+      "name": "単色（赤）",
+      "description": "全て赤で統一（高刺激色の単色条件）",
+      "factors": {
+        "harmony": "monochrome",
+        "accent": "none",
+        "symmetry": "copy"
+      },
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "red" },
+        { "plateId": "plate-1-1-2", "cake": "red" },
+        { "plateId": "plate-1-1-3", "cake": "red" },
+        { "plateId": "plate-1-2-1", "cake": "red" },
+        { "plateId": "plate-1-2-2", "cake": "red" },
+        { "plateId": "plate-1-2-3", "cake": "red" },
+        { "plateId": "plate-1-3-1", "cake": "red" },
+        { "plateId": "plate-1-3-2", "cake": "red" },
+        { "plateId": "plate-1-3-3", "cake": "red" },
+        { "plateId": "plate-1-4-1", "cake": "red" },
         { "plateId": "plate-1-4-2", "cake": "red" },
+        { "plateId": "plate-1-4-3", "cake": "red" },
+
+        { "plateId": "plate-2-1-1", "cake": "red" },
+        { "plateId": "plate-2-1-2", "cake": "red" },
+        { "plateId": "plate-2-1-3", "cake": "red" },
+        { "plateId": "plate-2-2-1", "cake": "red" },
+        { "plateId": "plate-2-2-2", "cake": "red" },
+        { "plateId": "plate-2-2-3", "cake": "red" },
+        { "plateId": "plate-2-3-1", "cake": "red" },
+        { "plateId": "plate-2-3-2", "cake": "red" },
+        { "plateId": "plate-2-3-3", "cake": "red" },
+        { "plateId": "plate-2-4-1", "cake": "red" },
+        { "plateId": "plate-2-4-2", "cake": "red" },
+        { "plateId": "plate-2-4-3", "cake": "red" }
+      ]
+    },
+    {
+      "id": "complementary-accent",
+      "name": "補色アクセント",
+      "description": "白基調に、黄緑（補色系）と赤をアクセントとして配置",
+      "factors": {
+        "harmony": "complementary",
+        "accent": "multi",
+        "symmetry": "copy"
+      },
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "brown" },
+        { "plateId": "plate-1-1-2", "cake": "white" },
+        { "plateId": "plate-1-1-3", "cake": "white" },
+        { "plateId": "plate-1-2-1", "cake": "white" },
+        { "plateId": "plate-1-2-2", "cake": "lime" },
+        { "plateId": "plate-1-2-3", "cake": "red" },
+        { "plateId": "plate-1-3-1", "cake": "orange" },
+        { "plateId": "plate-1-3-2", "cake": "lime" },
+        { "plateId": "plate-1-3-3", "cake": "white" },
+        { "plateId": "plate-1-4-1", "cake": "white" },
+        { "plateId": "plate-1-4-2", "cake": "white" },
         { "plateId": "plate-1-4-3", "cake": "brown" },
 
-        { "plateId": "plate-2-1-1", "cake": "orange" },
-        { "plateId": "plate-2-1-2", "cake": "lime" },
-        { "plateId": "plate-2-1-3", "cake": "pink" },
-        { "plateId": "plate-2-2-1", "cake": "orange" },
+        { "plateId": "plate-2-1-1", "cake": "brown" },
+        { "plateId": "plate-2-1-2", "cake": "white" },
+        { "plateId": "plate-2-1-3", "cake": "white" },
+        { "plateId": "plate-2-2-1", "cake": "white" },
         { "plateId": "plate-2-2-2", "cake": "lime" },
-        { "plateId": "plate-2-2-3", "cake": "pink" },
+        { "plateId": "plate-2-2-3", "cake": "red" },
         { "plateId": "plate-2-3-1", "cake": "orange" },
         { "plateId": "plate-2-3-2", "cake": "lime" },
-        { "plateId": "plate-2-3-3", "cake": "pink" },
-        { "plateId": "plate-2-4-1", "cake": "orange" },
-        { "plateId": "plate-2-4-2", "cake": "lime" },
+        { "plateId": "plate-2-3-3", "cake": "white" },
+        { "plateId": "plate-2-4-1", "cake": "white" },
+        { "plateId": "plate-2-4-2", "cake": "white" },
+        { "plateId": "plate-2-4-3", "cake": "brown" }
+      ]
+    },
+    {
+      "id": "warm-analogous-gradient",
+      "name": "暖色類似＋グラデーション",
+      "description": "赤・ピンク・橙・茶の類似色でグラデーション配置（左右同一）",
+      "factors": {
+        "harmony": "analogous",
+        "accent": "none",
+        "symmetry": "copy",
+        "gradient": "rowcol"
+      },
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "red" },
+        { "plateId": "plate-1-1-2", "cake": "pink" },
+        { "plateId": "plate-1-1-3", "cake": "orange" },
+        { "plateId": "plate-1-2-1", "cake": "pink" },
+        { "plateId": "plate-1-2-2", "cake": "orange" },
+        { "plateId": "plate-1-2-3", "cake": "brown" },
+        { "plateId": "plate-1-3-1", "cake": "orange" },
+        { "plateId": "plate-1-3-2", "cake": "brown" },
+        { "plateId": "plate-1-3-3", "cake": "red" },
+        { "plateId": "plate-1-4-1", "cake": "brown" },
+        { "plateId": "plate-1-4-2", "cake": "red" },
+        { "plateId": "plate-1-4-3", "cake": "pink" },
+
+        { "plateId": "plate-2-1-1", "cake": "red" },
+        { "plateId": "plate-2-1-2", "cake": "pink" },
+        { "plateId": "plate-2-1-3", "cake": "orange" },
+        { "plateId": "plate-2-2-1", "cake": "pink" },
+        { "plateId": "plate-2-2-2", "cake": "orange" },
+        { "plateId": "plate-2-2-3", "cake": "brown" },
+        { "plateId": "plate-2-3-1", "cake": "orange" },
+        { "plateId": "plate-2-3-2", "cake": "brown" },
+        { "plateId": "plate-2-3-3", "cake": "red" },
+        { "plateId": "plate-2-4-1", "cake": "brown" },
+        { "plateId": "plate-2-4-2", "cake": "red" },
         { "plateId": "plate-2-4-3", "cake": "pink" }
       ]
     },
     {
-      "id": "random-multi-color",
-      "name": "ランダム配置",
-      "description": "バラバラにいろんな色のケーキを配置（左右で非対称）",
+      "id": "cool-dominant-warm-accent",
+      "name": "寒色優位＋暖色アクセント",
+      "description": "黄緑と白を主体に、中心に暖色（赤/橙）を置く",
+      "factors": {
+        "harmony": "cool-dominant",
+        "accent": "center-warm",
+        "symmetry": "copy"
+      },
       "placements": [
-        { "plateId": "plate-1-1-1", "cake": "white" },
-        { "plateId": "plate-1-1-2", "cake": "red" },
-        { "plateId": "plate-1-1-3", "cake": "brown" },
-        { "plateId": "plate-1-2-1", "cake": "orange" },
-        { "plateId": "plate-1-2-2", "cake": "lime" },
-        { "plateId": "plate-1-2-3", "cake": "pink" },
-        { "plateId": "plate-1-3-1", "cake": "red" },
+        { "plateId": "plate-1-1-1", "cake": "lime" },
+        { "plateId": "plate-1-1-2", "cake": "white" },
+        { "plateId": "plate-1-1-3", "cake": "lime" },
+        { "plateId": "plate-1-2-1", "cake": "white" },
+        { "plateId": "plate-1-2-2", "cake": "red" },
+        { "plateId": "plate-1-2-3", "cake": "white" },
+        { "plateId": "plate-1-3-1", "cake": "lime" },
         { "plateId": "plate-1-3-2", "cake": "orange" },
-        { "plateId": "plate-1-3-3", "cake": "white" },
-        { "plateId": "plate-1-4-1", "cake": "brown" },
-        { "plateId": "plate-1-4-2", "cake": "pink" },
-        { "plateId": "plate-1-4-3", "cake": "lime" },
+        { "plateId": "plate-1-3-3", "cake": "lime" },
+        { "plateId": "plate-1-4-1", "cake": "white" },
+        { "plateId": "plate-1-4-2", "cake": "lime" },
+        { "plateId": "plate-1-4-3", "cake": "white" },
 
         { "plateId": "plate-2-1-1", "cake": "lime" },
         { "plateId": "plate-2-1-2", "cake": "white" },
-        { "plateId": "plate-2-1-3", "cake": "pink" },
-        { "plateId": "plate-2-2-1", "cake": "brown" },
+        { "plateId": "plate-2-1-3", "cake": "lime" },
+        { "plateId": "plate-2-2-1", "cake": "white" },
         { "plateId": "plate-2-2-2", "cake": "red" },
-        { "plateId": "plate-2-2-3", "cake": "orange" },
-        { "plateId": "plate-2-3-1", "cake": "orange" },
-        { "plateId": "plate-2-3-2", "cake": "lime" },
-        { "plateId": "plate-2-3-3", "cake": "red" },
+        { "plateId": "plate-2-2-3", "cake": "white" },
+        { "plateId": "plate-2-3-1", "cake": "lime" },
+        { "plateId": "plate-2-3-2", "cake": "orange" },
+        { "plateId": "plate-2-3-3", "cake": "lime" },
         { "plateId": "plate-2-4-1", "cake": "white" },
-        { "plateId": "plate-2-4-2", "cake": "brown" },
-        { "plateId": "plate-2-4-3", "cake": "pink" }
+        { "plateId": "plate-2-4-2", "cake": "lime" },
+        { "plateId": "plate-2-4-3", "cake": "white" }
       ]
     },
     {
-      "id": "symmetric-same-position",
+      "id": "symmetric-copy",
       "name": "同位置対称（完全一致）",
-      "description": "左右ショーケースで同じ(row,col)に同じ色を置く（ミラー反転ではなくコピー）",
+      "description": "左右ショーケースで同じ(row,col)に同じ色を置く（コピー）",
+      "factors": { "harmony": "mixed", "accent": "mixed", "symmetry": "copy" },
       "placements": [
         { "plateId": "plate-1-1-1", "cake": "red" },
         { "plateId": "plate-1-1-2", "cake": "white" },
@@ -126,6 +264,172 @@
         { "plateId": "plate-2-4-2", "cake": "pink" },
         { "plateId": "plate-2-4-3", "cake": "brown" }
       ]
+    },
+    {
+      "id": "random-asymmetric",
+      "name": "ランダム配置（非対称）",
+      "description": "左右で非対称にランダム配置（多色）",
+      "factors": {
+        "harmony": "mixed",
+        "accent": "mixed",
+        "symmetry": "asymmetric"
+      },
+      "placements": [
+        { "plateId": "plate-1-1-1", "cake": "white" },
+        { "plateId": "plate-1-1-2", "cake": "red" },
+        { "plateId": "plate-1-1-3", "cake": "brown" },
+        { "plateId": "plate-1-2-1", "cake": "orange" },
+        { "plateId": "plate-1-2-2", "cake": "lime" },
+        { "plateId": "plate-1-2-3", "cake": "pink" },
+        { "plateId": "plate-1-3-1", "cake": "red" },
+        { "plateId": "plate-1-3-2", "cake": "orange" },
+        { "plateId": "plate-1-3-3", "cake": "white" },
+        { "plateId": "plate-1-4-1", "cake": "brown" },
+        { "plateId": "plate-1-4-2", "cake": "pink" },
+        { "plateId": "plate-1-4-3", "cake": "lime" },
+
+        { "plateId": "plate-2-1-1", "cake": "lime" },
+        { "plateId": "plate-2-1-2", "cake": "white" },
+        { "plateId": "plate-2-1-3", "cake": "pink" },
+        { "plateId": "plate-2-2-1", "cake": "brown" },
+        { "plateId": "plate-2-2-2", "cake": "red" },
+        { "plateId": "plate-2-2-3", "cake": "orange" },
+        { "plateId": "plate-2-3-1", "cake": "orange" },
+        { "plateId": "plate-2-3-2", "cake": "lime" },
+        { "plateId": "plate-2-3-3", "cake": "red" },
+        { "plateId": "plate-2-4-1", "cake": "white" },
+        { "plateId": "plate-2-4-2", "cake": "brown" },
+        { "plateId": "plate-2-4-3", "cake": "pink" }
+      ]
     }
-  ]
+  ],
+  "experiment": {
+    "design": {
+      "type": "within",
+      "patternOrder": "shuffle",
+      "seed": 20251215,
+      "trialTimeLimitSec": 30,
+      "interTrialRestSec": 5,
+      "practiceTrial": {
+        "enabled": true,
+        "patternId": "monochrome-white",
+        "timeLimitSec": 15
+      }
+    },
+
+    "flow": [
+      {
+        "id": "consent",
+        "type": "page",
+        "title": "同意",
+        "content": "本実験は配置の印象評価を目的とします。匿名で集計され、途中終了も可能です。"
+      },
+      {
+        "id": "demographics",
+        "type": "form",
+        "title": "基本情報",
+        "items": [
+          {
+            "id": "age",
+            "type": "number",
+            "label": "年齢",
+            "min": 15,
+            "max": 99,
+            "required": true
+          },
+          {
+            "id": "gender",
+            "type": "singleChoice",
+            "label": "性別（任意）",
+            "options": ["男性", "女性", "回答しない", "その他"],
+            "required": false
+          },
+          {
+            "id": "colorVision",
+            "type": "singleChoice",
+            "label": "色覚に関する自己申告（任意）",
+            "options": ["問題ない", "違和感がある/診断あり", "回答しない"],
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "instructions",
+        "type": "page",
+        "title": "回答方法",
+        "content": "各配置を見た後、質問に回答してください。直感で構いません。"
+      }
+    ],
+
+    "trial": {
+      "taskText": "配置を見て、直後の質問に回答してください。",
+      "questionnaire": [
+        {
+          "id": "purchaseIntent",
+          "type": "likert",
+          "label": "この配置の商品を購入したいと思う",
+          "scale": 7,
+          "anchors": ["全く思わない", "非常に思う"],
+          "required": true
+        },
+        {
+          "id": "attractiveness",
+          "type": "likert",
+          "label": "この配置は魅力的だと感じる",
+          "scale": 7,
+          "anchors": ["全く感じない", "非常に感じる"],
+          "required": true
+        },
+        {
+          "id": "clarity",
+          "type": "likert",
+          "label": "商品が見やすい（分かりやすい）と感じる",
+          "scale": 7,
+          "anchors": ["全く感じない", "非常に感じる"],
+          "required": true
+        },
+        {
+          "id": "freeComment",
+          "type": "text",
+          "label": "理由（任意）",
+          "maxLength": 200,
+          "required": false
+        }
+      ]
+    },
+
+    "post": {
+      "questionnaire": [
+        {
+          "id": "bestPattern",
+          "type": "singleChoice",
+          "label": "最も良いと感じた配置を選んでください",
+          "options": "dynamicFromPresentedPatterns",
+          "required": true
+        },
+        {
+          "id": "ranking",
+          "type": "ranking",
+          "label": "配置を好ましい順に並べてください（任意）",
+          "items": "dynamicFromPresentedPatterns",
+          "required": false
+        }
+      ]
+    },
+
+    "logging": {
+      "enabled": false
+    },
+
+    "dataExport": {
+      "formats": ["csv", "jsonl"],
+      "trialRowKeys": [
+        "participantId",
+        "patternId",
+        "purchaseIntent",
+        "attractiveness",
+        "clarity"
+      ]
+    }
+  }
 }

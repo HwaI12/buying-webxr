@@ -1,0 +1,45 @@
+{
+  "id": "pattern-06-symmetric-copy",
+  "name": "同位置対称（完全一致）",
+  "description": "左右ショーケースで同じ(row,col)に同じ色を置く（コピー）",
+  "researchPurpose": "完全対称配置の効果を検証。対称性が秩序感・見やすさに与える影響を測定",
+  "factors": {
+    "colorDiversity": "multicolor",
+    "colorTemperature": "mixed",
+    "harmony": "mixed",
+    "accent": "mixed",
+    "symmetry": "copy"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "中",
+    "attractiveness": "中",
+    "clarity": "高",
+    "rationale": "対称性により秩序感があり見やすいが、刺激は中程度と予想"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "red" },
+    { "plateId": "plate-1-1-2", "cake": "white" },
+    { "plateId": "plate-1-1-3", "cake": "orange" },
+    { "plateId": "plate-1-2-1", "cake": "pink" },
+    { "plateId": "plate-1-2-2", "cake": "brown" },
+    { "plateId": "plate-1-2-3", "cake": "lime" },
+    { "plateId": "plate-1-3-1", "cake": "white" },
+    { "plateId": "plate-1-3-2", "cake": "orange" },
+    { "plateId": "plate-1-3-3", "cake": "red" },
+    { "plateId": "plate-1-4-1", "cake": "lime" },
+    { "plateId": "plate-1-4-2", "cake": "pink" },
+    { "plateId": "plate-1-4-3", "cake": "brown" },
+    { "plateId": "plate-2-1-1", "cake": "red" },
+    { "plateId": "plate-2-1-2", "cake": "white" },
+    { "plateId": "plate-2-1-3", "cake": "orange" },
+    { "plateId": "plate-2-2-1", "cake": "pink" },
+    { "plateId": "plate-2-2-2", "cake": "brown" },
+    { "plateId": "plate-2-2-3", "cake": "lime" },
+    { "plateId": "plate-2-3-1", "cake": "white" },
+    { "plateId": "plate-2-3-2", "cake": "orange" },
+    { "plateId": "plate-2-3-3", "cake": "red" },
+    { "plateId": "plate-2-4-1", "cake": "lime" },
+    { "plateId": "plate-2-4-2", "cake": "pink" },
+    { "plateId": "plate-2-4-3", "cake": "brown" }
+  ]
+}

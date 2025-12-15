@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "description": "評価実験用の商品カタログ（ケーキの色定義）",
+  "catalog": {
+    "cakes": {
+      "white": {
+        "name": "白いケーキ",
+        "material": { "color": "#FFFFFF" },
+        "colorCategory": "neutral",
+        "notes": "基準色・ニュートラル"
+      },
+      "red": {
+        "name": "赤いケーキ",
+        "material": { "color": "#FF6B6B" },
+        "colorCategory": "warm",
+        "colorTemperature": "high",
+        "notes": "暖色・高刺激・食欲喚起"
+      },
+      "brown": {
+        "name": "茶色いケーキ",
+        "material": { "color": "#8B4513" },
+        "colorCategory": "warm",
+        "colorTemperature": "medium",
+        "notes": "暖色・チョコレート連想"
+      },
+      "orange": {
+        "name": "オレンジケーキ",
+        "material": { "color": "#FFA500" },
+        "colorCategory": "warm",
+        "colorTemperature": "high",
+        "notes": "暖色・明るい・活発"
+      },
+      "lime": {
+        "name": "黄緑ケーキ",
+        "material": { "color": "#9ACD32" },
+        "colorCategory": "cool",
+        "colorTemperature": "low",
+        "notes": "寒色・フレッシュ・自然"
+      },
+      "pink": {
+        "name": "ピンクケーキ",
+        "material": { "color": "#FFB6C1" },
+        "colorCategory": "warm",
+        "colorTemperature": "medium",
+        "notes": "暖色・可愛らしさ・優しさ"
+      }
+    }
+  },
+  "colorTheory": {
+    "warmColors": ["red", "orange", "pink", "brown"],
+    "coolColors": ["lime"],
+    "neutralColors": ["white"],
+    "notes": {
+      "warmColors": "食欲を喚起し、購買意欲を高めると予想される（既存研究との整合性）",
+      "coolColors": "爽やかさや新鮮さを感じさせるが、食欲喚起は弱い可能性",
+      "neutralColors": "対照条件として使用。他の色の効果を相対的に測定"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "pattern-09-mirror-symmetric",
+  "name": "鏡像対称",
+  "description": "左右ショーケースで鏡像反転（左右対称）",
+  "researchPurpose": "鏡像対称配置の効果を検証。完全一致対称（pattern-06）との比較により対称性のバリエーションを測定",
+  "factors": {
+    "colorDiversity": "multicolor",
+    "colorTemperature": "mixed",
+    "harmony": "mixed",
+    "accent": "mixed",
+    "symmetry": "mirror"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "中",
+    "attractiveness": "中-高",
+    "clarity": "高",
+    "rationale": "鏡像対称により視覚的バランスが良く、見やすく魅力的と予想"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "red" },
+    { "plateId": "plate-1-1-2", "cake": "white" },
+    { "plateId": "plate-1-1-3", "cake": "orange" },
+    { "plateId": "plate-1-2-1", "cake": "pink" },
+    { "plateId": "plate-1-2-2", "cake": "brown" },
+    { "plateId": "plate-1-2-3", "cake": "lime" },
+    { "plateId": "plate-1-3-1", "cake": "white" },
+    { "plateId": "plate-1-3-2", "cake": "orange" },
+    { "plateId": "plate-1-3-3", "cake": "red" },
+    { "plateId": "plate-1-4-1", "cake": "lime" },
+    { "plateId": "plate-1-4-2", "cake": "pink" },
+    { "plateId": "plate-1-4-3", "cake": "brown" },
+    { "plateId": "plate-2-1-1", "cake": "orange" },
+    { "plateId": "plate-2-1-2", "cake": "white" },
+    { "plateId": "plate-2-1-3", "cake": "red" },
+    { "plateId": "plate-2-2-1", "cake": "lime" },
+    { "plateId": "plate-2-2-2", "cake": "brown" },
+    { "plateId": "plate-2-2-3", "cake": "pink" },
+    { "plateId": "plate-2-3-1", "cake": "red" },
+    { "plateId": "plate-2-3-2", "cake": "orange" },
+    { "plateId": "plate-2-3-3", "cake": "white" },
+    { "plateId": "plate-2-4-1", "cake": "brown" },
+    { "plateId": "plate-2-4-2", "cake": "pink" },
+    { "plateId": "plate-2-4-3", "cake": "lime" }
+  ]
+}

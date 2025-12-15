@@ -1,0 +1,245 @@
+{
+  "version": "1.0",
+  "description": "色配置パターンの一覧とメタデータ（評価実験用）",
+  "totalPatterns": 10,
+  "comparisonAxes": {
+    "colorDiversity": {
+      "description": "色の多様性",
+      "levels": ["monochrome", "multicolor"],
+      "patterns": {
+        "monochrome": [
+          "pattern-01-monochrome-white",
+          "pattern-02-monochrome-red"
+        ],
+        "multicolor": [
+          "pattern-03-complementary-accent",
+          "pattern-04-warm-analogous-gradient",
+          "pattern-05-cool-dominant-warm-accent",
+          "pattern-06-symmetric-copy",
+          "pattern-07-random-asymmetric",
+          "pattern-08-warm-dominant",
+          "pattern-09-mirror-symmetric",
+          "pattern-10-vertical-gradient"
+        ]
+      }
+    },
+    "colorTemperature": {
+      "description": "色温度（暖色 vs 寒色）",
+      "levels": ["neutral", "warm", "cool", "mixed"],
+      "patterns": {
+        "neutral": ["pattern-01-monochrome-white"],
+        "warm": [
+          "pattern-02-monochrome-red",
+          "pattern-04-warm-analogous-gradient",
+          "pattern-08-warm-dominant"
+        ],
+        "cool": ["pattern-05-cool-dominant-warm-accent"],
+        "mixed": [
+          "pattern-03-complementary-accent",
+          "pattern-06-symmetric-copy",
+          "pattern-07-random-asymmetric",
+          "pattern-09-mirror-symmetric",
+          "pattern-10-vertical-gradient"
+        ]
+      }
+    },
+    "symmetry": {
+      "description": "対称性",
+      "levels": ["copy", "mirror", "asymmetric"],
+      "patterns": {
+        "copy": [
+          "pattern-01-monochrome-white",
+          "pattern-02-monochrome-red",
+          "pattern-03-complementary-accent",
+          "pattern-04-warm-analogous-gradient",
+          "pattern-05-cool-dominant-warm-accent",
+          "pattern-06-symmetric-copy",
+          "pattern-08-warm-dominant",
+          "pattern-10-vertical-gradient"
+        ],
+        "mirror": ["pattern-09-mirror-symmetric"],
+        "asymmetric": ["pattern-07-random-asymmetric"]
+      }
+    },
+    "arrangement": {
+      "description": "配置の規則性",
+      "levels": ["gradient", "structured", "random"],
+      "patterns": {
+        "gradient": [
+          "pattern-04-warm-analogous-gradient",
+          "pattern-10-vertical-gradient"
+        ],
+        "structured": [
+          "pattern-01-monochrome-white",
+          "pattern-02-monochrome-red",
+          "pattern-03-complementary-accent",
+          "pattern-05-cool-dominant-warm-accent",
+          "pattern-06-symmetric-copy",
+          "pattern-08-warm-dominant",
+          "pattern-09-mirror-symmetric"
+        ],
+        "random": ["pattern-07-random-asymmetric"]
+      }
+    }
+  },
+  "patterns": [
+    {
+      "id": "pattern-01-monochrome-white",
+      "name": "単色（白）",
+      "file": "patterns/pattern-01-monochrome-white.json",
+      "group": "baseline",
+      "colorDiversity": "monochrome",
+      "colorTemperature": "neutral",
+      "symmetry": "copy",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-02-monochrome-red",
+      "name": "単色（赤）",
+      "file": "patterns/pattern-02-monochrome-red.json",
+      "group": "baseline",
+      "colorDiversity": "monochrome",
+      "colorTemperature": "warm",
+      "symmetry": "copy",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-03-complementary-accent",
+      "name": "補色アクセント",
+      "file": "patterns/pattern-03-complementary-accent.json",
+      "group": "harmony",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "mixed",
+      "symmetry": "copy",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-04-warm-analogous-gradient",
+      "name": "暖色類似＋グラデーション",
+      "file": "patterns/pattern-04-warm-analogous-gradient.json",
+      "group": "gradient",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "warm",
+      "symmetry": "copy",
+      "arrangement": "gradient"
+    },
+    {
+      "id": "pattern-05-cool-dominant-warm-accent",
+      "name": "寒色優位＋暖色アクセント",
+      "file": "patterns/pattern-05-cool-dominant-warm-accent.json",
+      "group": "temperature",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "cool",
+      "symmetry": "copy",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-06-symmetric-copy",
+      "name": "同位置対称（完全一致）",
+      "file": "patterns/pattern-06-symmetric-copy.json",
+      "group": "symmetry",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "mixed",
+      "symmetry": "copy",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-07-random-asymmetric",
+      "name": "ランダム配置（非対称）",
+      "file": "patterns/pattern-07-random-asymmetric.json",
+      "group": "symmetry",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "mixed",
+      "symmetry": "asymmetric",
+      "arrangement": "random"
+    },
+    {
+      "id": "pattern-08-warm-dominant",
+      "name": "暖色優位",
+      "file": "patterns/pattern-08-warm-dominant.json",
+      "group": "temperature",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "warm",
+      "symmetry": "copy",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-09-mirror-symmetric",
+      "name": "鏡像対称",
+      "file": "patterns/pattern-09-mirror-symmetric.json",
+      "group": "symmetry",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "mixed",
+      "symmetry": "mirror",
+      "arrangement": "structured"
+    },
+    {
+      "id": "pattern-10-vertical-gradient",
+      "name": "垂直グラデーション",
+      "file": "patterns/pattern-10-vertical-gradient.json",
+      "group": "gradient",
+      "colorDiversity": "multicolor",
+      "colorTemperature": "mixed",
+      "symmetry": "copy",
+      "arrangement": "gradient"
+    }
+  ],
+  "experimentalComparisons": {
+    "description": "評価実験における主要な比較",
+    "comparisons": [
+      {
+        "hypothesis": "単色より多色配置の方が購買意欲が高い",
+        "patterns": {
+          "monochrome": [
+            "pattern-01-monochrome-white",
+            "pattern-02-monochrome-red"
+          ],
+          "multicolor": [
+            "pattern-03-complementary-accent",
+            "pattern-04-warm-analogous-gradient",
+            "pattern-06-symmetric-copy",
+            "pattern-08-warm-dominant"
+          ]
+        }
+      },
+      {
+        "hypothesis": "暖色優位配置は寒色優位配置より購買意欲が高い",
+        "patterns": {
+          "warm": [
+            "pattern-02-monochrome-red",
+            "pattern-04-warm-analogous-gradient",
+            "pattern-08-warm-dominant"
+          ],
+          "cool": ["pattern-05-cool-dominant-warm-accent"]
+        }
+      },
+      {
+        "hypothesis": "対称配置は非対称配置より見やすさ評価が高い",
+        "patterns": {
+          "symmetric": [
+            "pattern-06-symmetric-copy",
+            "pattern-09-mirror-symmetric"
+          ],
+          "asymmetric": ["pattern-07-random-asymmetric"]
+        }
+      },
+      {
+        "hypothesis": "グラデーション配置はランダム配置より魅力度が高い",
+        "patterns": {
+          "gradient": [
+            "pattern-04-warm-analogous-gradient",
+            "pattern-10-vertical-gradient"
+          ],
+          "random": ["pattern-07-random-asymmetric"]
+        }
+      }
+    ]
+  },
+  "statisticalConsiderations": {
+    "recommendedSampleSize": "被験者数20-30名（被験者内計画）",
+    "counterbalancing": "パターン順序はランダム化（カウンターバランス）",
+    "multipleComparisons": "多重比較補正（Bonferroni法またはHolm法）を適用",
+    "effectSize": "偏イータ二乗を効果量として算出",
+    "notes": "10パターン × 3評価項目 = 30データポイント/被験者。十分な検出力を確保するため被験者数は最低20名を推奨"
+  }
+}

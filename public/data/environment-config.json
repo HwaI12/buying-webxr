@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "description": "評価実験用の環境設定（照明・ブース・グリッド配置）",
+  "environment": {
+    "lighting": {
+      "intensity": 1.0,
+      "colorTemperatureK": 5000,
+      "notes": "昼白色（5000K）で統一。全パターンで同一条件を維持"
+    },
+    "booth": {
+      "wallColor": "#FFFFFF",
+      "floorColor": "#E6E6E6",
+      "notes": "白い壁と明るいグレーの床で、商品の色が際立つように設定"
+    },
+    "startPose": {
+      "position": { "x": 0, "y": 1.6, "z": 2.2 },
+      "yawDeg": 180,
+      "notes": "目の高さ1.6m、ショーケースから2.2m離れた位置から両方のショーケースを視野に収める"
+    },
+    "ui": {
+      "language": "ja",
+      "showTimer": true,
+      "showTaskText": true
+    }
+  },
+  "plates": {
+    "grid": {
+      "showcases": [1, 2],
+      "rows": [1, 2, 3, 4],
+      "cols": [1, 2, 3],
+      "notes": "2つのショーケース × 4段 × 3列 = 計24個のお皿"
+    },
+    "idFormat": "plate-{showcase}-{row}-{col}",
+    "layout": {
+      "showcaseSpacing": 1.5,
+      "rowHeight": 0.3,
+      "colWidth": 0.25,
+      "notes": "ショーケース間隔1.5m、段の高さ0.3m、列の幅0.25m"
+    }
+  },
+  "defaults": {
+    "product": {
+      "type": "primitive",
+      "geometry": {
+        "primitive": "cylinder",
+        "radius": 0.12,
+        "height": 0.09,
+        "notes": "円柱形状でケーキを表現（直径24cm、高さ9cm相当）"
+      },
+      "material": {
+        "roughness": 0.3,
+        "metalness": 0.1,
+        "notes": "適度な光沢で食品らしい質感を表現"
+      },
+      "transform": {
+        "positionOffset": { "x": 0, "y": 0.13, "z": 0 },
+        "rotation": { "x": 0, "y": 0, "z": 0 },
+        "scale": { "x": 2.8, "y": 2.8, "z": 2.8 }
+      }
+    }
+  }
+}

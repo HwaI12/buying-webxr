@@ -1,0 +1,46 @@
+{
+  "id": "pattern-04-warm-analogous-gradient",
+  "name": "暖色類似＋グラデーション",
+  "description": "赤・ピンク・橙・茶の類似色でグラデーション配置（左右同一）",
+  "researchPurpose": "暖色の類似色相による調和と、グラデーションによる視覚的流れの効果を検証",
+  "factors": {
+    "colorDiversity": "multicolor",
+    "colorTemperature": "warm",
+    "harmony": "analogous",
+    "accent": "none",
+    "symmetry": "copy",
+    "gradient": "diagonal"
+  },
+  "expectedOutcome": {
+    "purchaseIntent": "高",
+    "attractiveness": "高",
+    "clarity": "中-高",
+    "rationale": "暖色が食欲を喚起し、グラデーションが美しく調和的な印象を与えると予想"
+  },
+  "placements": [
+    { "plateId": "plate-1-1-1", "cake": "red" },
+    { "plateId": "plate-1-1-2", "cake": "pink" },
+    { "plateId": "plate-1-1-3", "cake": "orange" },
+    { "plateId": "plate-1-2-1", "cake": "pink" },
+    { "plateId": "plate-1-2-2", "cake": "orange" },
+    { "plateId": "plate-1-2-3", "cake": "brown" },
+    { "plateId": "plate-1-3-1", "cake": "orange" },
+    { "plateId": "plate-1-3-2", "cake": "brown" },
+    { "plateId": "plate-1-3-3", "cake": "red" },
+    { "plateId": "plate-1-4-1", "cake": "brown" },
+    { "plateId": "plate-1-4-2", "cake": "red" },
+    { "plateId": "plate-1-4-3", "cake": "pink" },
+    { "plateId": "plate-2-1-1", "cake": "red" },
+    { "plateId": "plate-2-1-2", "cake": "pink" },
+    { "plateId": "plate-2-1-3", "cake": "orange" },
+    { "plateId": "plate-2-2-1", "cake": "pink" },
+    { "plateId": "plate-2-2-2", "cake": "orange" },
+    { "plateId": "plate-2-2-3", "cake": "brown" },
+    { "plateId": "plate-2-3-1", "cake": "orange" },
+    { "plateId": "plate-2-3-2", "cake": "brown" },
+    { "plateId": "plate-2-3-3", "cake": "red" },
+    { "plateId": "plate-2-4-1", "cake": "brown" },
+    { "plateId": "plate-2-4-2", "cake": "red" },
+    { "plateId": "plate-2-4-3", "cake": "pink" }
+  ]
+}
